@@ -240,7 +240,7 @@ textarea{resize:vertical;min-height:88px;line-height:1.6}
       <div class="field"><label>&#9201; Hours worked</label><div class="hours-row"><input type="number" id="f-hours" min="0" max="24" step="0.5" value="8"><span style="font-size:13px;color:var(--text3)">hours</span></div></div>
       <div class="field"><label>&#128221; Notes</label><textarea id="f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea></div>
     </div>
-    <button class="btn btn-primary btn-full" id="save-btn" onclick="saveEntry()">&#8593; Save to GitHub</button>
+    <button class="btn btn-primary btn-full" id="save-btn" onclick="saveEntry()">&#8593; Save</button>
   </div>
   <div id="emp-tab-history" style="display:none"><div id="emp-history-list"></div></div>
 </div>
@@ -271,7 +271,7 @@ textarea{resize:vertical;min-height:88px;line-height:1.6}
       <div class="field"><label>&#9201; Hours worked</label><div class="hours-row"><input type="number" id="tl-f-hours" min="0" max="24" step="0.5" value="8"><span style="font-size:13px;color:var(--text3)">hours</span></div></div>
       <div class="field"><label>&#128221; Notes</label><textarea id="tl-f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea></div>
     </div>
-    <button class="btn btn-tl btn-full" id="tl-save-btn" onclick="saveTlEntry()">&#8593; Save to GitHub</button>
+    <button class="btn btn-tl btn-full" id="tl-save-btn" onclick="saveTlEntry()">&#8593; Save</button>
     <div style="margin-top:20px">
       <p style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px">My history</p>
       <div id="tl-history-list"></div>
@@ -323,7 +323,7 @@ textarea{resize:vertical;min-height:88px;line-height:1.6}
       <div class="field"><label>&#9201; Hours worked</label><div class="hours-row"><input type="number" id="co-f-hours" min="0" max="24" step="0.5" value="8"><span style="font-size:13px;color:var(--text3)">hours</span></div></div>
       <div class="field"><label>&#128221; Notes</label><textarea id="co-f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea></div>
     </div>
-    <button class="btn btn-co btn-full" id="co-save-btn" onclick="saveCoEntry()">&#8593; Save to GitHub</button>
+    <button class="btn btn-co btn-full" id="co-save-btn" onclick="saveCoEntry()">&#8593; Save</button>
     <div style="margin-top:20px">
       <p style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px">My history</p>
       <div id="co-history-list"></div>
@@ -630,7 +630,7 @@ async function saveEntry(){
     showMsg('emp-form-msg','&#10003; Saved!','success');
     $('today-status-badge').innerHTML='&#10003; Saved';$('today-status-badge').className='badge badge-success';
   }catch(e){showMsg('emp-form-msg','Save failed: '+e.message,'error')}
-  btn.disabled=false;btn.innerHTML='&#8593; Save to GitHub';
+  btn.disabled=false;btn.innerHTML='&#8593; Save';
 }
 function empTab(tab){
   $('tab-today-btn').classList.toggle('active',tab==='today');
@@ -679,7 +679,7 @@ async function saveTlEntry(){
     $('tl-status-badge').innerHTML='&#10003; Saved';$('tl-status-badge').className='badge badge-success';
     loadTlHistory();
   }catch(e){showMsg('tl-form-msg','Save failed: '+e.message,'error')}
-  btn.disabled=false;btn.innerHTML='&#8593; Save to GitHub';
+  btn.disabled=false;btn.innerHTML='&#8593; Save';
 }
 async function loadTlHistory(){
   const el=$('tl-history-list');
@@ -830,7 +830,7 @@ async function saveCoEntry(){
     $('co-status-badge').innerHTML='&#10003; Saved';$('co-status-badge').className='badge badge-success';
     loadCoHistory();
   }catch(e){showMsg('co-form-msg','Save failed: '+e.message,'error')}
-  btn.disabled=false;btn.innerHTML='&#8593; Save to GitHub';
+  btn.disabled=false;btn.innerHTML='&#8593; Save';
 }
 async function loadCoHistory(){
   const el=$('co-history-list');
