@@ -7,1087 +7,815 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f4f0;
-  --surface: #ffffff;
-  --surface2: #f0efe9;
-  --border: #e2e0d8;
-  --border2: #d0cec4;
-  --text: #1a1917;
-  --text2: #6b6860;
-  --text3: #9e9b92;
-  --accent: #2d5a3d;
-  --accent-bg: #e8f0eb;
-  --accent-text: #1d3d28;
-  --warn: #92400e;
-  --warn-bg: #fef3c7;
-  --danger: #991b1b;
-  --danger-bg: #fde8e8;
-  --info: #1e3a5f;
-  --info-bg: #dbeafe;
-  --radius: 10px;
-  --radius-sm: 6px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;--border:#e2e0d8;--border2:#d0cec4;
+  --text:#1a1917;--text2:#6b6860;--text3:#9e9b92;
+  --accent:#2d5a3d;--accent-bg:#e8f0eb;--accent-text:#1d3d28;
+  --warn:#92400e;--warn-bg:#fef3c7;
+  --danger:#991b1b;--danger-bg:#fde8e8;
+  --info:#1e3a5f;--info-bg:#dbeafe;
+  --tl:#5b21b6;--tl-bg:#ede9fe;
+  --radius:10px;--radius-sm:6px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.app {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 24px 16px 60px;
-}
-
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--accent);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 18px;
-}
-
-.logo-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.3px;
-}
-
-.logo-sub {
-  font-size: 12px;
-  color: var(--text3);
-  font-family: 'DM Mono', monospace;
-}
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  box-shadow: var(--shadow);
-  margin-bottom: 16px;
-}
-
-.card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.card-title svg { color: var(--text3); }
-
-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text2);
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-
-input[type=text], input[type=password], input[type=number], input[type=date], textarea, select {
-  width: 100%;
-  padding: 9px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.15s;
-  -webkit-appearance: none;
-}
-
-input:focus, textarea:focus, select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(45,90,61,0.1);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 88px;
-  line-height: 1.6;
-}
-
-.field { margin-bottom: 14px; }
-
-.field:last-child { margin-bottom: 0; }
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  padding: 10px 18px;
-  border-radius: var(--radius-sm);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.15s;
-  text-decoration: none;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-.btn-primary:hover { background: #234a32; border-color: #234a32; }
-.btn-primary:active { transform: scale(0.98); }
-
-.btn-secondary {
-  background: var(--surface);
-  color: var(--text2);
-  border-color: var(--border2);
-}
-
-.btn-secondary:hover { background: var(--surface2); color: var(--text); }
-
-.btn-full { width: 100%; }
-.btn-sm { padding: 7px 13px; font-size: 13px; }
-.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
-
-.msg {
-  padding: 10px 13px;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.msg-success { background: var(--accent-bg); color: var(--accent-text); }
-.msg-error { background: var(--danger-bg); color: var(--danger); }
-.msg-info { background: var(--info-bg); color: var(--info); }
-.msg-warn { background: var(--warn-bg); color: var(--warn); }
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 9px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-}
-
-.badge-success { background: var(--accent-bg); color: var(--accent-text); }
-.badge-warn { background: var(--warn-bg); color: var(--warn); }
-.badge-danger { background: var(--danger-bg); color: var(--danger); }
-.badge-info { background: var(--info-bg); color: var(--info); }
-.badge-neutral { background: var(--surface2); color: var(--text2); }
-
-.avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--accent-bg);
-  color: var(--accent-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 600;
-  flex-shrink: 0;
-  font-family: 'DM Mono', monospace;
-}
-
-.avatar-admin {
-  background: var(--warn-bg);
-  color: var(--warn);
-}
-
-.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
-
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  background: var(--surface2);
-  border-radius: var(--radius-sm);
-  padding: 4px;
-  margin-bottom: 20px;
-}
-
-.nav-tab {
-  flex: 1;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  background: transparent;
-  color: var(--text2);
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.nav-tab.active {
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow);
-}
-
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-}
-
-.stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-.stat-value { font-size: 22px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
-
-.entry-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 18px;
-  margin-bottom: 12px;
-  transition: border-color 0.15s;
-}
-
-.entry-card:hover { border-color: var(--border2); }
-
-.entry-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.entry-date { font-size: 14px; font-weight: 600; color: var(--text); }
-.entry-emp { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 2px; }
-
-.entry-section { margin-bottom: 12px; }
-.entry-section:last-child { margin-bottom: 0; }
-.entry-section-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-.entry-section-text { font-size: 14px; color: var(--text); white-space: pre-wrap; line-height: 1.6; }
-
-.filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-.filter-row input, .filter-row select { flex: 1; min-width: 130px; }
-
-.screen { display: none; }
-.screen.active { display: block; }
-
-.section-heading {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text2);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hours-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hours-row input[type=number] {
-  width: 90px;
-}
-
-.today-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-  padding: 12px 16px;
-  background: var(--surface2);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-}
-
-.today-bar-date { font-size: 14px; font-weight: 500; color: var(--text); }
-.today-bar-day { font-size: 12px; color: var(--text3); margin-top: 1px; }
-
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text3);
-  font-size: 14px;
-}
-
-.empty-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.4; }
-
-.loading {
-  text-align: center;
-  padding: 30px;
-  color: var(--text3);
-  font-size: 14px;
-}
-
-.spin {
-  display: inline-block;
-  width: 18px; height: 18px;
-  border: 2px solid var(--border2);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  vertical-align: middle;
-  margin-right: 8px;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.top-user-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 22px;
-  padding: 12px 16px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-.user-info { display: flex; align-items: center; gap: 10px; }
-.user-name { font-size: 14px; font-weight: 600; color: var(--text); }
-.user-id { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; }
-
-.config-note {
-  font-size: 12px;
-  color: var(--text3);
-  text-align: center;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 12px;
-  cursor: pointer;
-  text-decoration: underline;
-  font-family: 'DM Sans', sans-serif;
-  padding: 0;
-}
-
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-@media (max-width: 480px) {
-  .row2 { grid-template-columns: 1fr; }
-  .filter-row { flex-direction: column; }
-}
-
-.help-text {
-  font-size: 12px;
-  color: var(--text3);
-  margin-top: 5px;
-}
-
-.pin-box {
-  width: 56px !important;
-  height: 56px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 600;
-  font-family: 'DM Mono', monospace;
-  border: 1.5px solid var(--border2);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  padding: 0;
-}
-
-.pin-box:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(45,90,61,0.12);
-}
-
-.pin-box.filled {
-  border-color: var(--accent);
-  background: var(--accent-bg);
-}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.app{max-width:680px;margin:0 auto;padding:24px 16px 60px}
+.app-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:36px;height:36px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.logo-text{font-size:16px;font-weight:600;letter-spacing:-.3px}
+.logo-sub{font-size:12px;color:var(--text3);font-family:'DM Mono',monospace}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);margin-bottom:16px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:7px}
+label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+input[type=text],input[type=password],input[type=number],input[type=date],textarea,select{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .15s;-webkit-appearance:none}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,90,61,.1)}
+textarea{resize:vertical;min-height:88px;line-height:1.6}
+.field{margin-bottom:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 18px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:#234a32}
+.btn-secondary{background:var(--surface);color:var(--text2);border-color:var(--border2)}
+.btn-secondary:hover{background:var(--surface2);color:var(--text)}
+.btn-tl{background:var(--tl);color:#fff;border-color:var(--tl)}
+.btn-tl:hover{background:#4c1d95}
+.btn-danger{background:var(--danger-bg);color:var(--danger);border-color:#fca5a5}
+.btn-danger:hover{background:#fecaca}
+.btn-full{width:100%}
+.btn-sm{padding:7px 13px;font-size:13px}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.msg{padding:10px 13px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:14px}
+.msg-success{background:var(--accent-bg);color:var(--accent-text)}
+.msg-error{background:var(--danger-bg);color:var(--danger)}
+.msg-info{background:var(--info-bg);color:var(--info)}
+.msg-warn{background:var(--warn-bg);color:var(--warn)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-success{background:var(--accent-bg);color:var(--accent-text)}
+.badge-warn{background:var(--warn-bg);color:var(--warn)}
+.badge-danger{background:var(--danger-bg);color:var(--danger)}
+.badge-info{background:var(--info-bg);color:var(--info)}
+.badge-neutral{background:var(--surface2);color:var(--text2)}
+.badge-tl{background:var(--tl-bg);color:var(--tl)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--accent-bg);color:var(--accent-text);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;font-family:'DM Mono',monospace}
+.avatar-admin{background:var(--warn-bg);color:var(--warn)}
+.avatar-tl{background:var(--tl-bg);color:var(--tl)}
+.divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+.nav-tabs{display:flex;gap:4px;background:var(--surface2);border-radius:var(--radius-sm);padding:4px;margin-bottom:20px}
+.nav-tab{flex:1;padding:8px 12px;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.nav-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat-value{font-size:22px;font-weight:600;font-family:'DM Mono',monospace}
+.entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:12px;transition:border-color .15s}
+.entry-card:hover{border-color:var(--border2)}
+.entry-date{font-size:14px;font-weight:600}
+.entry-emp{font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:2px}
+.entry-section{margin-bottom:12px}
+.entry-section:last-child{margin-bottom:0}
+.entry-section-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.entry-section-text{font-size:14px;white-space:pre-wrap;line-height:1.6}
+.screen{display:none}
+.screen.active{display:block}
+.hours-row{display:flex;align-items:center;gap:12px}
+.hours-row input[type=number]{width:90px}
+.today-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:12px 16px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)}
+.today-bar-date{font-size:14px;font-weight:500}
+.today-bar-day{font-size:12px;color:var(--text3);margin-top:1px}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text3);font-size:14px}
+.empty-icon{font-size:32px;margin-bottom:10px;opacity:.4}
+.loading{text-align:center;padding:30px;color:var(--text3);font-size:14px}
+.spin{display:inline-block;width:18px;height:18px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.top-user-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+.user-info{display:flex;align-items:center;gap:10px}
+.user-name{font-size:14px;font-weight:600}
+.user-id{font-size:12px;color:var(--text3);font-family:'DM Mono',monospace}
+.config-note{font-size:12px;color:var(--text3);text-align:center;margin-top:10px}
+.link-btn{background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;text-decoration:underline;font-family:'DM Sans',sans-serif;padding:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.help-text{font-size:12px;color:var(--text3);margin-top:5px}
+.pin-box{width:56px!important;height:56px;text-align:center;font-size:22px;font-weight:600;font-family:'DM Mono',monospace;border:1.5px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;padding:0}
+.pin-box:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,90,61,.12)}
+.pin-box.filled{border-color:var(--accent);background:var(--accent-bg)}
+.reg-row{display:grid;grid-template-columns:1fr 1.5fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+@media(max-width:520px){.row2{grid-template-columns:1fr}.reg-row{grid-template-columns:1fr 1fr;row-gap:6px}}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <div class="app-header">
-    <div class="logo">
-      <div class="logo-icon">&#9998;</div>
-      <div>
-        <div class="logo-text">Daily Journal</div>
-        <div class="logo-sub">Team work log</div>
-      </div>
-    </div>
-    <div id="header-actions"></div>
+<div class="app-header">
+  <div class="logo">
+    <div class="logo-icon">&#9998;</div>
+    <div><div class="logo-text">Daily Journal</div><div class="logo-sub">Team work log</div></div>
   </div>
+</div>
 
-  <!-- PIN SCREEN -->
-  <div id="screen-pin" class="screen">
-    <div style="max-width:340px;margin:0 auto">
-      <div class="card">
-        <div class="card-title">&#128274; Enter config PIN</div>
-        <p style="font-size:13px;color:var(--text2);margin-bottom:16px">This area is protected. Enter the 4-digit PIN to access GitHub configuration.</p>
-        <div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px" id="pin-boxes">
-          <input type="password" maxlength="1" class="pin-box" id="pin0" oninput="pinInput(0)" onkeydown="pinKey(event,0)" inputmode="numeric" pattern="[0-9]">
-          <input type="password" maxlength="1" class="pin-box" id="pin1" oninput="pinInput(1)" onkeydown="pinKey(event,1)" inputmode="numeric" pattern="[0-9]">
-          <input type="password" maxlength="1" class="pin-box" id="pin2" oninput="pinInput(2)" onkeydown="pinKey(event,2)" inputmode="numeric" pattern="[0-9]">
-          <input type="password" maxlength="1" class="pin-box" id="pin3" oninput="pinInput(3)" onkeydown="pinKey(event,3)" inputmode="numeric" pattern="[0-9]">
-        </div>
-        <div id="pin-msg"></div>
-        <button class="btn btn-primary btn-full" onclick="verifyPin()" style="margin-bottom:10px">Verify PIN &rarr;</button>
-        <button class="btn btn-secondary btn-full" onclick="showScreen('screen-login')">&larr; Back</button>
-      </div>
-      <div class="config-note">First time? Default PIN is <strong>1234</strong> &mdash; change it in config after login.</div>
-    </div>
+<!-- LOADING SCREEN -->
+<div id="screen-loading" class="screen active">
+  <div style="text-align:center;padding:80px 20px">
+    <div style="font-size:32px;margin-bottom:16px">&#9998;</div>
+    <div class="loading"><span class="spin"></span>Loading app config...</div>
+    <div id="loading-msg" style="margin-top:16px"></div>
   </div>
+</div>
 
-  <!-- CONFIG SCREEN -->
-  <div id="screen-config" class="screen active">
+<!-- PIN SCREEN (admin config access) -->
+<div id="screen-pin" class="screen">
+  <div style="max-width:340px;margin:0 auto">
     <div class="card">
-      <div class="card-title">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg>
-        GitHub configuration
+      <div class="card-title">&#128274; Enter config PIN</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px">Protected area. Enter 4-digit PIN to manage configuration.</p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px">
+        <input type="password" maxlength="1" class="pin-box" id="pin0" oninput="pinInput(0)" onkeydown="pinKey(event,0)" inputmode="numeric">
+        <input type="password" maxlength="1" class="pin-box" id="pin1" oninput="pinInput(1)" onkeydown="pinKey(event,1)" inputmode="numeric">
+        <input type="password" maxlength="1" class="pin-box" id="pin2" oninput="pinInput(2)" onkeydown="pinKey(event,2)" inputmode="numeric">
+        <input type="password" maxlength="1" class="pin-box" id="pin3" oninput="pinInput(3)" onkeydown="pinKey(event,3)" inputmode="numeric">
       </div>
+      <div id="pin-msg"></div>
+      <button class="btn btn-primary btn-full" onclick="verifyPin()" style="margin-bottom:10px">Verify PIN &rarr;</button>
+      <button class="btn btn-secondary btn-full" onclick="showScreen('screen-login')">&larr; Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN CONFIG SCREEN -->
+<div id="screen-config" class="screen">
+  <div style="max-width:520px;margin:0 auto">
+    <div class="card">
+      <div class="card-title">&#9881; App configuration</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:16px">
+        These settings are saved to <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-family:'DM Mono',monospace;font-size:12px">config.json</code> in your GitHub repo and loaded by all devices automatically.
+      </p>
       <div class="field">
-        <label>GitHub username</label>
-        <input type="text" id="cfg-owner" placeholder="e.g. yourusername">
+        <label>Read-write PAT (for saving entries)</label>
+        <input type="password" id="cfg-rw-token" placeholder="ghp_xxxx  (Contents: Read & Write)">
+        <div class="help-text">Used by employees to save their daily entries</div>
       </div>
-      <div class="field">
-        <label>Repository name</label>
-        <input type="text" id="cfg-repo" placeholder="e.g. team-daily-journal">
-      </div>
-      <div class="field">
-        <label>Personal access token (PAT)</label>
-        <input type="password" id="cfg-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-        <div class="help-text">Needs repo &gt; contents read &amp; write permission</div>
-      </div>
-      <div class="field">
-        <label>Admin password</label>
-        <input type="password" id="cfg-adminpw" placeholder="Set a password for admin login">
-      </div>
-      <div class="field">
-        <label>Config PIN (4 digits)</label>
-        <input type="password" id="cfg-pin" placeholder="e.g. 1234" maxlength="4" inputmode="numeric" pattern="[0-9]{4}">
-        <div class="help-text">This PIN protects access to this config screen</div>
+      <div class="row2">
+        <div class="field"><label>Admin password</label><input type="password" id="cfg-adminpw" placeholder="Admin login password"></div>
+        <div class="field"><label>Config PIN (4 digits)</label><input type="password" id="cfg-pin" placeholder="1234" maxlength="4" inputmode="numeric"></div>
       </div>
       <div id="cfg-msg"></div>
-      <div style="margin-top:18px">
-        <button class="btn btn-primary btn-full" onclick="saveConfig()">Save &amp; continue &rarr;</button>
-      </div>
+      <button class="btn btn-primary btn-full" onclick="saveAppConfig()">&#8593; Save config to GitHub</button>
     </div>
-    <div class="config-note">
-      &#128274; Config is stored in your browser only. Never transmitted anywhere except GitHub API.
-    </div>
-  </div>
 
-  <!-- LOGIN SCREEN -->
-  <div id="screen-login" class="screen">
+    <!-- Employee Registry -->
     <div class="card">
-      <div class="card-title">Sign in</div>
-      <div class="row2">
-        <div class="field">
-          <label>Employee ID</label>
-          <input type="text" id="login-empid" placeholder="e.g. EMP001" oninput="this.value=this.value.toUpperCase()">
-        </div>
-        <div class="field">
-          <label>Full name</label>
-          <input type="text" id="login-name" placeholder="e.g. Arun Kumar">
-        </div>
+      <div class="card-title">&#128101; Employee registry</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:14px">Employees log in using their ID only — name and role are fetched from here.</p>
+      <div style="display:grid;grid-template-columns:1fr 1.5fr 1fr auto;gap:8px;margin-bottom:6px">
+        <span style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px">ID</span>
+        <span style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px">Full name</span>
+        <span style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.4px">Role</span>
+        <span></span>
+      </div>
+      <div id="registry-rows"></div>
+      <button class="btn btn-secondary btn-sm" onclick="addRegistryRow()" style="margin-top:8px;margin-bottom:14px">+ Add employee</button>
+      <div id="registry-msg"></div>
+      <button class="btn btn-tl btn-full" onclick="saveRegistry()">&#8593; Save registry to GitHub</button>
+    </div>
+    <div class="config-note">Changes saved to GitHub are instantly available on all devices.</div>
+  </div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="screen-login" class="screen">
+  <div style="max-width:360px;margin:0 auto">
+    <div class="card">
+      <div class="card-title">&#128100; Sign in</div>
+      <div class="field">
+        <label>Employee ID</label>
+        <input type="text" id="login-empid" placeholder="e.g. EMP001" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')loginUser()">
+        <div class="help-text">Enter your Employee ID to continue</div>
       </div>
       <div id="login-msg"></div>
-      <button class="btn btn-primary btn-full" onclick="loginEmployee()">Continue as employee &rarr;</button>
+      <button class="btn btn-primary btn-full" onclick="loginUser()" id="login-btn">Continue &rarr;</button>
       <hr class="divider">
       <button class="btn btn-secondary btn-full" onclick="showScreen('screen-adminlogin')">&#128737; Admin login</button>
     </div>
-    <div class="config-note">
-      <button class="link-btn" onclick="goConfig()">&#9881; Change GitHub config</button>
-    </div>
+    <div class="config-note"><button class="link-btn" onclick="goConfig()">&#9881; Manage config &amp; registry</button></div>
   </div>
+</div>
 
-  <!-- ADMIN LOGIN -->
-  <div id="screen-adminlogin" class="screen">
+<!-- ADMIN LOGIN -->
+<div id="screen-adminlogin" class="screen">
+  <div style="max-width:360px;margin:0 auto">
     <div class="card">
       <div class="card-title">&#128737; Admin access</div>
-      <div class="field">
-        <label>Admin password</label>
-        <input type="password" id="adminpw-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')loginAdmin()">
-      </div>
+      <div class="field"><label>Admin password</label><input type="password" id="adminpw-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')loginAdmin()"></div>
       <div id="adminlogin-msg"></div>
       <button class="btn btn-primary btn-full" onclick="loginAdmin()" style="margin-bottom:10px">Login as admin &rarr;</button>
       <button class="btn btn-secondary btn-full" onclick="showScreen('screen-login')">&larr; Back</button>
     </div>
   </div>
+</div>
 
-  <!-- EMPLOYEE SCREEN -->
-  <div id="screen-employee" class="screen">
-    <div class="top-user-bar">
-      <div class="user-info">
-        <div class="avatar" id="emp-avatar">AK</div>
-        <div>
-          <div class="user-name" id="emp-name-display">Arun Kumar</div>
-          <div class="user-id" id="emp-id-display">EMP001</div>
-        </div>
-      </div>
-      <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+<!-- EMPLOYEE SCREEN -->
+<div id="screen-employee" class="screen">
+  <div class="top-user-bar">
+    <div class="user-info">
+      <div class="avatar" id="emp-avatar">AK</div>
+      <div><div class="user-name" id="emp-name-display"></div><div class="user-id" id="emp-id-display"></div></div>
     </div>
-
-    <div class="nav-tabs">
-      <button class="nav-tab active" id="tab-today-btn" onclick="empTab('today')">&#9998; Today's log</button>
-      <button class="nav-tab" id="tab-history-btn" onclick="empTab('history')">&#128337; My history</button>
+    <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-today-btn" onclick="empTab('today')">&#9998; Today's log</button>
+    <button class="nav-tab" id="tab-history-btn" onclick="empTab('history')">&#128337; My history</button>
+  </div>
+  <div id="emp-tab-today">
+    <div class="today-bar">
+      <div><div class="today-bar-date" id="today-date-label"></div><div class="today-bar-day" id="today-day-label"></div></div>
+      <span id="today-status-badge" class="badge badge-warn">Not saved</span>
     </div>
-
-    <div id="emp-tab-today">
-      <div class="today-bar">
-        <div>
-          <div class="today-bar-date" id="today-date-label"></div>
-          <div class="today-bar-day" id="today-day-label"></div>
-        </div>
-        <span id="today-status-badge" class="badge badge-warn">Not saved</span>
-      </div>
-      <div id="emp-form-msg"></div>
-      <div class="card">
-        <div class="field">
-          <label>&#10003; What did I do today</label>
-          <textarea id="f-did" placeholder="Describe tasks completed today..."></textarea>
-        </div>
-        <div class="field">
-          <label>&#8594; What I plan to do tomorrow</label>
-          <textarea id="f-planned" placeholder="Tasks planned for tomorrow..."></textarea>
-        </div>
-        <div class="field">
-          <label>&#9888; Blockers / issues faced</label>
-          <textarea id="f-blockers" placeholder="Any blockers or issues? Leave blank if none." style="min-height:68px"></textarea>
-        </div>
-        <div class="field">
-          <label>&#9201; Hours worked</label>
-          <div class="hours-row">
-            <input type="number" id="f-hours" min="0" max="24" step="0.5" value="8">
-            <span style="font-size:13px;color:var(--text3)">hours</span>
-          </div>
-        </div>
-        <div class="field">
-          <label>&#128221; Additional notes</label>
-          <textarea id="f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea>
-        </div>
-      </div>
-      <button class="btn btn-primary btn-full" id="save-btn" onclick="saveEntry()">&#8593; Save to GitHub</button>
+    <div id="emp-form-msg"></div>
+    <div class="card">
+      <div class="field"><label>&#10003; What did I do today</label><textarea id="f-did" placeholder="Describe tasks completed today..."></textarea></div>
+      <div class="field"><label>&#8594; What I plan to do tomorrow</label><textarea id="f-planned" placeholder="Tasks planned for tomorrow..."></textarea></div>
+      <div class="field"><label>&#9888; Blockers / issues faced</label><textarea id="f-blockers" placeholder="Any blockers or issues? Leave blank if none." style="min-height:68px"></textarea></div>
+      <div class="field"><label>&#9201; Hours worked</label><div class="hours-row"><input type="number" id="f-hours" min="0" max="24" step="0.5" value="8"><span style="font-size:13px;color:var(--text3)">hours</span></div></div>
+      <div class="field"><label>&#128221; Notes</label><textarea id="f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea></div>
     </div>
+    <button class="btn btn-primary btn-full" id="save-btn" onclick="saveEntry()">&#8593; Save to GitHub</button>
+  </div>
+  <div id="emp-tab-history" style="display:none"><div id="emp-history-list"></div></div>
+</div>
 
-    <div id="emp-tab-history" style="display:none">
-      <div id="emp-history-list"></div>
+<!-- TECH LEAD SCREEN -->
+<div id="screen-techlead" class="screen">
+  <div class="top-user-bar">
+    <div class="user-info">
+      <div class="avatar avatar-tl">&#128203;</div>
+      <div><div class="user-name" id="tl-name-display"></div><div class="user-id" id="tl-id-display"></div></div>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tl-tab-log-btn" onclick="tlTab('log')">&#9998; My log</button>
+    <button class="nav-tab" id="tl-tab-team-btn" onclick="tlTab('team')">&#128203; Team view</button>
+  </div>
+  <div id="tl-tab-log">
+    <div class="today-bar">
+      <div><div class="today-bar-date" id="tl-today-date-label"></div><div class="today-bar-day" id="tl-today-day-label"></div></div>
+      <span id="tl-today-status-badge" class="badge badge-warn">Not saved</span>
+    </div>
+    <div id="tl-form-msg"></div>
+    <div class="card">
+      <div class="field"><label>&#10003; What did I do today</label><textarea id="tl-f-did" placeholder="Describe tasks completed today..."></textarea></div>
+      <div class="field"><label>&#8594; What I plan to do tomorrow</label><textarea id="tl-f-planned" placeholder="Tasks planned for tomorrow..."></textarea></div>
+      <div class="field"><label>&#9888; Blockers / issues faced</label><textarea id="tl-f-blockers" placeholder="Any blockers or issues?" style="min-height:68px"></textarea></div>
+      <div class="field"><label>&#9201; Hours worked</label><div class="hours-row"><input type="number" id="tl-f-hours" min="0" max="24" step="0.5" value="8"><span style="font-size:13px;color:var(--text3)">hours</span></div></div>
+      <div class="field"><label>&#128221; Notes</label><textarea id="tl-f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea></div>
+    </div>
+    <button class="btn btn-tl btn-full" id="tl-save-btn" onclick="saveTlEntry()">&#8593; Save to GitHub</button>
+    <div style="margin-top:20px">
+      <p style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px">My history</p>
+      <div id="tl-history-list"></div>
     </div>
   </div>
-
-  <!-- ADMIN SCREEN -->
-  <div id="screen-admin" class="screen">
-    <div class="top-user-bar">
-      <div class="user-info">
-        <div class="avatar avatar-admin">&#128737;</div>
-        <div>
-          <div class="user-name">Admin panel</div>
-          <div class="user-id">All employee logs</div>
-        </div>
-      </div>
-      <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
-    </div>
-
-    <div id="admin-stats" class="stat-grid"></div>
-
+  <div id="tl-tab-team" style="display:none">
+    <div id="tl-stats" class="stat-grid"></div>
     <div class="card" style="margin-bottom:16px">
       <div class="card-title">&#128269; Filter entries</div>
       <div class="row2" style="margin-bottom:10px">
-        <div class="field" style="margin-bottom:0">
-          <label>From date</label>
-          <input type="date" id="admin-filter-from" onchange="adminFilter()">
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <label>To date</label>
-          <input type="date" id="admin-filter-to" onchange="adminFilter()">
-        </div>
+        <div class="field" style="margin-bottom:0"><label>From date</label><input type="date" id="tl-filter-from" onchange="tlFilter()"></div>
+        <div class="field" style="margin-bottom:0"><label>To date</label><input type="date" id="tl-filter-to" onchange="tlFilter()"></div>
       </div>
-      <div class="field" style="margin-bottom:10px">
-        <label>Employee (ID or name)</label>
-        <input type="text" id="admin-filter-emp" placeholder="Leave blank for all employees" oninput="adminFilter()">
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn btn-secondary btn-sm" onclick="clearAdminFilter()">&#10005; Clear filters</button>
-        <button class="btn btn-primary btn-sm" onclick="exportToExcel()" id="export-btn" style="margin-left:auto">&#8595; Export to Excel</button>
+      <div class="field" style="margin-bottom:10px"><label>Employee (ID or name)</label><input type="text" id="tl-filter-emp" placeholder="Leave blank for all" oninput="tlFilter()"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="clearTlFilter()">&#10005; Clear</button>
+        <button class="btn btn-tl btn-sm" onclick="exportTlExcel()" id="tl-export-btn" style="margin-left:auto">&#8595; Export to Excel</button>
       </div>
     </div>
-    <div id="admin-msg"></div>
-    <div id="admin-filter-summary" style="font-size:13px;color:var(--text2);margin-bottom:10px"></div>
-    <div id="admin-entries-list"></div>
+    <div id="tl-msg"></div>
+    <div id="tl-filter-summary" style="font-size:13px;color:var(--text2);margin-bottom:10px"></div>
+    <div id="tl-entries-list"></div>
   </div>
-
 </div>
 
+<!-- ADMIN SCREEN -->
+<div id="screen-admin" class="screen">
+  <div class="top-user-bar">
+    <div class="user-info">
+      <div class="avatar avatar-admin">&#128737;</div>
+      <div><div class="user-name">Admin panel</div><div class="user-id">All employee logs</div></div>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+  </div>
+  <div id="admin-stats" class="stat-grid"></div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">&#128269; Filter entries</div>
+    <div class="row2" style="margin-bottom:10px">
+      <div class="field" style="margin-bottom:0"><label>From date</label><input type="date" id="admin-filter-from" onchange="adminFilter()"></div>
+      <div class="field" style="margin-bottom:0"><label>To date</label><input type="date" id="admin-filter-to" onchange="adminFilter()"></div>
+    </div>
+    <div class="field" style="margin-bottom:10px"><label>Employee (ID or name)</label><input type="text" id="admin-filter-emp" placeholder="Leave blank for all employees" oninput="adminFilter()"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-secondary btn-sm" onclick="clearAdminFilter()">&#10005; Clear</button>
+      <button class="btn btn-primary btn-sm" onclick="exportToExcel()" id="export-btn" style="margin-left:auto">&#8595; Export to Excel</button>
+    </div>
+  </div>
+  <div id="admin-msg"></div>
+  <div id="admin-filter-summary" style="font-size:13px;color:var(--text2);margin-bottom:10px"></div>
+  <div id="admin-entries-list"></div>
+</div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-const CFG_KEY = 'djConfig_v2';
+
+// =====================================================
+//  FILL IN THESE TWO VALUES BEFORE DEPLOYING
+//  RO_TOKEN : a Fine-grained PAT with Contents = Read-only
+//  REPO     : "githubusername/reponame"
+// =====================================================
+const RO_TOKEN = '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';
+const REPO     = 'sreejithadra96/team-daily-journal';
+// =====================================================
+
+let appConfig   = null;   // loaded from config.json  {rwToken, adminpw, pin}
+let registry    = [];     // loaded from registry.json [{id,name,role}]
 let currentUser = null;
-let isAdmin = false;
-let allEntries = [];
+let allEntries  = [];
+let tlAllEntries= [];
 
-function getConfig() {
-  try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); } catch(e) { return null; }
-}
-function saveConfigData(o) { localStorage.setItem(CFG_KEY, JSON.stringify(o)); }
+/* ── helpers ── */
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function showMsg(id,text,type='info'){const el=document.getElementById(id);if(!el)return;el.innerHTML=text?`<div class="msg msg-${type}">${text}</div>`:''}
+function todayStr(){return new Date().toISOString().slice(0,10)}
+function formatDate(d){return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'})}
+function formatDay(d){return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{weekday:'long'})}
+function initials(name){return name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}
+function empFolder(id,name){return`entries/${id}_${name.replace(/[^a-zA-Z0-9]/g,'_')}`}
+function empFilePath(id,name,date){return`${empFolder(id,name)}/${date}.json`}
+function decode(f){return JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g,'')))))}
+function b64(str){return btoa(unescape(encodeURIComponent(str)))}
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-function showMsg(elId, text, type = 'info') {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  el.innerHTML = text ? `<div class="msg msg-${type}">${text}</div>` : '';
-}
-
-function goConfig() {
-  clearPin();
-  showMsg('pin-msg', '', '');
-  showScreen('screen-pin');
-  setTimeout(() => document.getElementById('pin0').focus(), 100);
-}
-
-function saveConfig() {
-  const owner = document.getElementById('cfg-owner').value.trim();
-  const repo = document.getElementById('cfg-repo').value.trim();
-  const token = document.getElementById('cfg-token').value.trim();
-  const adminpw = document.getElementById('cfg-adminpw').value.trim();
-  const pin = document.getElementById('cfg-pin').value.trim();
-  if (!owner || !repo || !token || !adminpw) { showMsg('cfg-msg', 'All fields are required.', 'error'); return; }
-  if (pin && !/^\d{4}$/.test(pin)) { showMsg('cfg-msg', 'PIN must be exactly 4 digits.', 'error'); return; }
-  saveConfigData({ owner, repo, token, adminpw, pin: pin || '1234' });
-  showMsg('cfg-msg', '&#10003; Configuration saved!', 'success');
-  setTimeout(() => showScreen('screen-login'), 800);
-}
-
-async function ghRequest(path, method = 'GET', body = null) {
-  const c = getConfig();
-  if (!c) throw new Error('No config found.');
-  const opts = {
-    method,
-    headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`, opts);
-  if (r.status === 404 && method === 'GET') return null;
-  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
+/* ── GitHub API ── */
+async function ghReq(path, method='GET', body=null, token=null){
+  const tok = token || (appConfig && appConfig.rwToken) || RO_TOKEN;
+  const opts={method,headers:{'Authorization':'token '+tok,'Accept':'application/vnd.github+json','Content-Type':'application/json'}};
+  if(body)opts.body=JSON.stringify(body);
+  const r=await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`,opts);
+  if(r.status===404&&method==='GET')return null;
+  if(!r.ok){const e=await r.json();throw new Error(e.message||'GitHub error')}
   return r.json();
 }
-
-async function ghGetFile(path) { return ghRequest(path, 'GET'); }
-
-async function ghPutFile(path, content, sha = null) {
-  const body = { message: `Journal: ${path}`, content: btoa(unescape(encodeURIComponent(content))) };
-  if (sha) body.sha = sha;
-  return ghRequest(path, 'PUT', body);
+async function ghGet(path,token=null){return ghReq(path,'GET',null,token)}
+async function ghPut(path,content,sha=null,token=null){
+  const b={message:`Journal: ${path}`,content:b64(content)};
+  if(sha)b.sha=sha;
+  return ghReq(path,'PUT',b,token);
 }
 
-function todayStr() { return new Date().toISOString().slice(0, 10); }
-
-function empFolder(empId, empName) {
-  const safe = empName.replace(/[^a-zA-Z0-9]/g, '_');
-  return `entries/${empId}_${safe}`;
+/* ── App startup: fetch config.json from GitHub ── */
+async function initApp(){
+  showScreen('screen-loading');
+  try{
+    const f = await ghGet('config.json', RO_TOKEN);
+    if(!f){
+      // First time — no config.json yet, go straight to setup
+      showMsg('loading-msg','No config found. Setting up for first time...','info');
+      setTimeout(()=>{showScreen('screen-config');},1000);
+      return;
+    }
+    appConfig = decode(f);
+    // Also load registry
+    const rf = await ghGet('registry.json', RO_TOKEN);
+    if(rf) registry = decode(rf);
+    showScreen('screen-login');
+  } catch(e){
+    showMsg('loading-msg',`<div class="msg msg-error">Failed to load config: ${e.message}<br><small>Check that RO_TOKEN and REPO are correct in the HTML file.</small></div>`,'');
+  }
 }
 
-function empFilePath(empId, empName, date) {
-  return `${empFolder(empId, empName)}/${date}.json`;
+/* ── PIN ── */
+function clearPin(){for(let i=0;i<4;i++){const e=document.getElementById('pin'+i);e.value='';e.classList.remove('filled')}}
+function pinInput(i){
+  const e=document.getElementById('pin'+i);
+  e.value=e.value.replace(/\D/g,'').slice(-1);
+  if(e.value){e.classList.add('filled');if(i<3)document.getElementById('pin'+(i+1)).focus();else verifyPin()}
+  else e.classList.remove('filled');
+}
+function pinKey(ev,i){
+  if(ev.key==='Backspace'&&!document.getElementById('pin'+i).value&&i>0){
+    const p=document.getElementById('pin'+(i-1));p.value='';p.classList.remove('filled');p.focus();
+  }
+}
+function verifyPin(){
+  const entered=[0,1,2,3].map(i=>document.getElementById('pin'+i).value).join('');
+  if(entered.length<4){showMsg('pin-msg','Enter all 4 digits.','error');return}
+  const correctPin=(appConfig&&appConfig.pin)||'1234';
+  if(entered===correctPin){
+    showScreen('screen-config');
+    loadConfigIntoUI();
+    loadRegistryIntoUI();
+  } else {
+    showMsg('pin-msg','&#10007; Incorrect PIN.','error');
+    clearPin();setTimeout(()=>document.getElementById('pin0').focus(),100);
+  }
+}
+function goConfig(){clearPin();showMsg('pin-msg','');showScreen('screen-pin');setTimeout(()=>document.getElementById('pin0').focus(),100)}
+
+/* ── Config UI ── */
+function loadConfigIntoUI(){
+  if(!appConfig)return;
+  document.getElementById('cfg-rw-token').value=appConfig.rwToken||'';
+  document.getElementById('cfg-adminpw').value=appConfig.adminpw||'';
+  document.getElementById('cfg-pin').value=appConfig.pin||'1234';
 }
 
-function formatDate(d) {
-  const dt = new Date(d + 'T00:00:00');
-  return dt.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+async function saveAppConfig(){
+  const rwToken=document.getElementById('cfg-rw-token').value.trim();
+  const adminpw=document.getElementById('cfg-adminpw').value.trim();
+  const pin=document.getElementById('cfg-pin').value.trim();
+  if(!rwToken||!adminpw){showMsg('cfg-msg','Read-write token and admin password are required.','error');return}
+  if(pin&&!/^\d{4}$/.test(pin)){showMsg('cfg-msg','PIN must be exactly 4 digits.','error');return}
+  const btn=document.querySelector('[onclick="saveAppConfig()"]');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving to GitHub...';
+  const data={rwToken,adminpw,pin:pin||'1234'};
+  try{
+    const existing=await ghGet('config.json',RO_TOKEN);
+    // Use rwToken to save config (RO_TOKEN can't write)
+    await ghPut('config.json',JSON.stringify(data,null,2),existing?existing.sha:null,rwToken);
+    appConfig=data;
+    showMsg('cfg-msg','&#10003; Config saved to GitHub! All devices will use this automatically.','success');
+  } catch(e){showMsg('cfg-msg','Save failed: '+e.message,'error')}
+  btn.disabled=false;btn.innerHTML='&#8593; Save config to GitHub';
 }
 
-function formatDay(d) {
-  const dt = new Date(d + 'T00:00:00');
-  return dt.toLocaleDateString('en-IN', { weekday: 'long' });
+/* ── Registry UI ── */
+function addRegistryRow(id='',name='',role='employee'){
+  const c=document.getElementById('registry-rows');
+  const row=document.createElement('div');row.className='reg-row';
+  row.innerHTML=`
+    <input type="text" placeholder="EMP001" value="${id}" oninput="this.value=this.value.toUpperCase()" style="padding:7px 10px;font-size:13px">
+    <input type="text" placeholder="Full name" value="${name}" style="padding:7px 10px;font-size:13px">
+    <select style="padding:7px 10px;font-size:13px">
+      <option value="employee"${role==='employee'?' selected':''}>Employee</option>
+      <option value="techlead"${role==='techlead'?' selected':''}>Tech Lead</option>
+    </select>
+    <button class="btn btn-danger btn-sm" onclick="this.closest('.reg-row').remove()">&#10005;</button>`;
+  c.appendChild(row);
 }
 
-function initials(name) {
-  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+function getRegistryFromUI(){
+  const rows=document.querySelectorAll('#registry-rows .reg-row');
+  const data=[];
+  rows.forEach(row=>{
+    const inputs=row.querySelectorAll('input');
+    const sel=row.querySelector('select');
+    const id=inputs[0].value.trim(),name=inputs[1].value.trim(),role=sel.value;
+    if(id&&name)data.push({id,name,role});
+  });
+  return data;
 }
 
-function loginEmployee() {
-  const id = document.getElementById('login-empid').value.trim();
-  const name = document.getElementById('login-name').value.trim();
-  if (!id || !name) { showMsg('login-msg', 'Please enter both Employee ID and name.', 'error'); return; }
-  const c = getConfig();
-  if (!c || !c.token) { showMsg('login-msg', 'GitHub not configured. Please set up config first.', 'error'); return; }
-  currentUser = { id, name };
-  isAdmin = false;
-  document.getElementById('emp-avatar').textContent = initials(name);
-  document.getElementById('emp-name-display').textContent = name;
-  document.getElementById('emp-id-display').textContent = id;
-  const t = todayStr();
-  document.getElementById('today-date-label').textContent = formatDate(t);
-  document.getElementById('today-day-label').textContent = formatDay(t);
-  showScreen('screen-employee');
-  loadTodayEntry();
+async function loadRegistryIntoUI(){
+  document.getElementById('registry-rows').innerHTML='';
+  showMsg('registry-msg','<span class="spin"></span>Loading registry...','info');
+  try{
+    const f=await ghGet('registry.json',RO_TOKEN);
+    if(f){decode(f).forEach(e=>addRegistryRow(e.id,e.name,e.role));showMsg('registry-msg','','');}
+    else showMsg('registry-msg','No registry yet. Add employees below.','info');
+  } catch(e){showMsg('registry-msg','Could not load registry: '+e.message,'error')}
 }
 
-function loginAdmin() {
-  const pw = document.getElementById('adminpw-input').value;
-  const c = getConfig();
-  if (!c) { showMsg('adminlogin-msg', 'GitHub not configured.', 'error'); return; }
-  if (pw !== c.adminpw) { showMsg('adminlogin-msg', 'Incorrect password.', 'error'); return; }
-  isAdmin = true; currentUser = null;
-  document.getElementById('adminpw-input').value = '';
-  showScreen('screen-admin');
-  loadAdminData();
+async function saveRegistry(){
+  const data=getRegistryFromUI();
+  if(!data.length){showMsg('registry-msg','Add at least one employee.','error');return}
+  if(!appConfig||!appConfig.rwToken){showMsg('registry-msg','Save the app config first to get the write token.','error');return}
+  const btn=document.querySelector('[onclick="saveRegistry()"]');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving to GitHub...';
+  try{
+    const existing=await ghGet('registry.json',RO_TOKEN);
+    await ghPut('registry.json',JSON.stringify(data,null,2),existing?existing.sha:null,appConfig.rwToken);
+    registry=data;
+    showMsg('registry-msg','&#10003; Registry saved to GitHub! Available on all devices instantly.','success');
+  } catch(e){showMsg('registry-msg','Save failed: '+e.message,'error')}
+  btn.disabled=false;btn.innerHTML='&#8593; Save registry to GitHub';
 }
 
-function logout() {
-  currentUser = null; isAdmin = false; allEntries = [];
-  document.getElementById('login-empid').value = '';
-  document.getElementById('login-name').value = '';
+/* ── Login ── */
+async function loginUser(){
+  const id=document.getElementById('login-empid').value.trim();
+  if(!id){showMsg('login-msg','Please enter your Employee ID.','error');return}
+  const btn=document.getElementById('login-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Looking up...';
+  showMsg('login-msg','');
+  try{
+    // Refresh registry if empty
+    if(!registry.length){
+      const rf=await ghGet('registry.json',RO_TOKEN);
+      if(rf)registry=decode(rf);
+    }
+    const emp=registry.find(e=>e.id===id);
+    if(!emp){showMsg('login-msg','Employee ID not found. Contact your admin.','error');btn.disabled=false;btn.innerHTML='Continue &rarr;';return}
+    currentUser={id:emp.id,name:emp.name,role:emp.role};
+    if(emp.role==='techlead'){
+      document.getElementById('tl-name-display').textContent=emp.name;
+      document.getElementById('tl-id-display').textContent=emp.id+' — Tech Lead';
+      const t=todayStr();
+      document.getElementById('tl-today-date-label').textContent=formatDate(t);
+      document.getElementById('tl-today-day-label').textContent=formatDay(t);
+      showScreen('screen-techlead');
+      loadTlTodayEntry();loadTlHistory();
+    } else {
+      document.getElementById('emp-avatar').textContent=initials(emp.name);
+      document.getElementById('emp-name-display').textContent=emp.name;
+      document.getElementById('emp-id-display').textContent=emp.id;
+      const t=todayStr();
+      document.getElementById('today-date-label').textContent=formatDate(t);
+      document.getElementById('today-day-label').textContent=formatDay(t);
+      showScreen('screen-employee');
+      loadTodayEntry();
+    }
+  } catch(e){showMsg('login-msg','Error: '+e.message,'error')}
+  btn.disabled=false;btn.innerHTML='Continue &rarr;';
+}
+
+function loginAdmin(){
+  const pw=document.getElementById('adminpw-input').value;
+  if(!appConfig){showMsg('adminlogin-msg','App config not loaded.','error');return}
+  if(pw!==appConfig.adminpw){showMsg('adminlogin-msg','Incorrect password.','error');return}
+  currentUser={role:'admin'};
+  document.getElementById('adminpw-input').value='';
+  showScreen('screen-admin');loadAdminData();
+}
+
+function logout(){
+  currentUser=null;allEntries=[];tlAllEntries=[];
+  document.getElementById('login-empid').value='';
   showScreen('screen-login');
 }
 
-async function loadTodayEntry() {
-  showMsg('emp-form-msg', '', '');
-  const path = empFilePath(currentUser.id, currentUser.name, todayStr());
-  try {
-    const f = await ghGetFile(path);
-    if (f) {
-      const data = JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g, '')))));
-      document.getElementById('f-did').value = data.did || '';
-      document.getElementById('f-planned').value = data.planned || '';
-      document.getElementById('f-blockers').value = data.blockers || '';
-      document.getElementById('f-hours').value = data.hours || 8;
-      document.getElementById('f-notes').value = data.notes || '';
-      document.getElementById('today-status-badge').textContent = '&#10003; Saved';
-      document.getElementById('today-status-badge').className = 'badge badge-success';
-    } else {
-      document.getElementById('today-status-badge').textContent = 'Not saved';
-      document.getElementById('today-status-badge').className = 'badge badge-warn';
+/* ── Employee journal ── */
+async function loadTodayEntry(){
+  showMsg('emp-form-msg','');
+  const path=empFilePath(currentUser.id,currentUser.name,todayStr());
+  try{
+    const f=await ghGet(path);
+    if(f){
+      const d=decode(f);
+      document.getElementById('f-did').value=d.did||'';
+      document.getElementById('f-planned').value=d.planned||'';
+      document.getElementById('f-blockers').value=d.blockers||'';
+      document.getElementById('f-hours').value=d.hours||8;
+      document.getElementById('f-notes').value=d.notes||'';
+      document.getElementById('today-status-badge').innerHTML='&#10003; Saved';
+      document.getElementById('today-status-badge').className='badge badge-success';
     }
-  } catch(e) {
-    showMsg('emp-form-msg', 'Could not load today\'s entry: ' + e.message, 'error');
+  } catch(e){showMsg('emp-form-msg','Could not load: '+e.message,'error')}
+}
+
+async function saveEntry(){
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving...';
+  showMsg('emp-form-msg','');
+  const path=empFilePath(currentUser.id,currentUser.name,todayStr());
+  const data={empId:currentUser.id,empName:currentUser.name,role:'employee',date:todayStr(),did:document.getElementById('f-did').value,planned:document.getElementById('f-planned').value,blockers:document.getElementById('f-blockers').value,hours:parseFloat(document.getElementById('f-hours').value)||0,notes:document.getElementById('f-notes').value,savedAt:new Date().toISOString()};
+  try{
+    const ex=await ghGet(path);
+    await ghPut(path,JSON.stringify(data,null,2),ex?ex.sha:null);
+    showMsg('emp-form-msg','&#10003; Saved to GitHub!','success');
+    document.getElementById('today-status-badge').innerHTML='&#10003; Saved';
+    document.getElementById('today-status-badge').className='badge badge-success';
+  } catch(e){showMsg('emp-form-msg','Save failed: '+e.message,'error')}
+  btn.disabled=false;btn.innerHTML='&#8593; Save to GitHub';
+}
+
+function empTab(tab){
+  document.getElementById('tab-today-btn').classList.toggle('active',tab==='today');
+  document.getElementById('tab-history-btn').classList.toggle('active',tab==='history');
+  document.getElementById('emp-tab-today').style.display=tab==='today'?'block':'none';
+  document.getElementById('emp-tab-history').style.display=tab==='history'?'block':'none';
+  if(tab==='history')loadEmpHistory();
+}
+
+async function loadEmpHistory(){
+  const el=document.getElementById('emp-history-list');
+  el.innerHTML='<div class="loading"><span class="spin"></span>Loading...</div>';
+  try{
+    const safe=currentUser.name.replace(/[^a-zA-Z0-9]/g,'_');
+    const dir=await ghGet(`entries/${currentUser.id}_${safe}`);
+    if(!dir||!Array.isArray(dir)){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries.</div>';return}
+    const files=dir.filter(f=>f.name.endsWith('.json')).sort((a,b)=>b.name.localeCompare(a.name));
+    const entries=await Promise.all(files.slice(0,30).map(async f=>{const r=await ghGet(f.path);return r?decode(r):null}));
+    el.innerHTML=entries.filter(Boolean).map(e=>renderCard(e,false)).join('');
+  } catch(e){el.innerHTML=`<div class="msg msg-error">Error: ${e.message}</div>`}
+}
+
+/* ── Tech Lead ── */
+async function loadTlTodayEntry(){
+  showMsg('tl-form-msg','');
+  const path=empFilePath(currentUser.id,currentUser.name,todayStr());
+  try{
+    const f=await ghGet(path);
+    if(f){
+      const d=decode(f);
+      document.getElementById('tl-f-did').value=d.did||'';
+      document.getElementById('tl-f-planned').value=d.planned||'';
+      document.getElementById('tl-f-blockers').value=d.blockers||'';
+      document.getElementById('tl-f-hours').value=d.hours||8;
+      document.getElementById('tl-f-notes').value=d.notes||'';
+      document.getElementById('tl-today-status-badge').innerHTML='&#10003; Saved';
+      document.getElementById('tl-today-status-badge').className='badge badge-success';
+    }
+  } catch(e){showMsg('tl-form-msg','Could not load: '+e.message,'error')}
+}
+
+async function saveTlEntry(){
+  const btn=document.getElementById('tl-save-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving...';
+  showMsg('tl-form-msg','');
+  const path=empFilePath(currentUser.id,currentUser.name,todayStr());
+  const data={empId:currentUser.id,empName:currentUser.name,role:'techlead',date:todayStr(),did:document.getElementById('tl-f-did').value,planned:document.getElementById('tl-f-planned').value,blockers:document.getElementById('tl-f-blockers').value,hours:parseFloat(document.getElementById('tl-f-hours').value)||0,notes:document.getElementById('tl-f-notes').value,savedAt:new Date().toISOString()};
+  try{
+    const ex=await ghGet(path);
+    await ghPut(path,JSON.stringify(data,null,2),ex?ex.sha:null);
+    showMsg('tl-form-msg','&#10003; Saved to GitHub!','success');
+    document.getElementById('tl-today-status-badge').innerHTML='&#10003; Saved';
+    document.getElementById('tl-today-status-badge').className='badge badge-success';
+    loadTlHistory();
+  } catch(e){showMsg('tl-form-msg','Save failed: '+e.message,'error')}
+  btn.disabled=false;btn.innerHTML='&#8593; Save to GitHub';
+}
+
+async function loadTlHistory(){
+  const el=document.getElementById('tl-history-list');
+  el.innerHTML='<div class="loading"><span class="spin"></span>Loading...</div>';
+  try{
+    const safe=currentUser.name.replace(/[^a-zA-Z0-9]/g,'_');
+    const dir=await ghGet(`entries/${currentUser.id}_${safe}`);
+    if(!dir||!Array.isArray(dir)){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries.</div>';return}
+    const files=dir.filter(f=>f.name.endsWith('.json')).sort((a,b)=>b.name.localeCompare(a.name));
+    const entries=await Promise.all(files.slice(0,20).map(async f=>{const r=await ghGet(f.path);return r?decode(r):null}));
+    el.innerHTML=entries.filter(Boolean).map(e=>renderCard(e,false)).join('');
+  } catch(e){el.innerHTML=`<div class="msg msg-error">Error: ${e.message}</div>`}
+}
+
+function tlTab(tab){
+  document.getElementById('tl-tab-log-btn').classList.toggle('active',tab==='log');
+  document.getElementById('tl-tab-team-btn').classList.toggle('active',tab==='team');
+  document.getElementById('tl-tab-log').style.display=tab==='log'?'block':'none';
+  document.getElementById('tl-tab-team').style.display=tab==='team'?'block':'none';
+  if(tab==='team')loadTlTeamData();
+}
+
+async function loadTlTeamData(){
+  showMsg('tl-msg','<span class="spin"></span>Loading team entries...','info');
+  document.getElementById('tl-entries-list').innerHTML='';
+  document.getElementById('tl-stats').innerHTML='';
+  try{
+    tlAllEntries=await fetchAllEntries();
+    const total=new Set(tlAllEntries.map(e=>e.empId)).size;
+    const tod=tlAllEntries.filter(e=>e.date===todayStr()).length;
+    const blk=tlAllEntries.filter(e=>e.blockers&&e.blockers.trim()).length;
+    const avg=tlAllEntries.length?Math.round(tlAllEntries.reduce((s,e)=>s+(e.hours||0),0)/tlAllEntries.length*10)/10:0;
+    document.getElementById('tl-stats').innerHTML=`
+      <div class="stat"><div class="stat-label">Team members</div><div class="stat-value">${total}</div></div>
+      <div class="stat"><div class="stat-label">Total entries</div><div class="stat-value">${tlAllEntries.length}</div></div>
+      <div class="stat"><div class="stat-label">Today's logs</div><div class="stat-value">${tod}</div></div>
+      <div class="stat"><div class="stat-label">With blockers</div><div class="stat-value">${blk}</div></div>
+      <div class="stat"><div class="stat-label">Avg hours</div><div class="stat-value">${avg}</div></div>`;
+    document.getElementById('tl-filter-from').value=todayStr();
+    document.getElementById('tl-filter-to').value=todayStr();
+    showMsg('tl-msg','');tlFilter();
+  } catch(e){showMsg('tl-msg','Error: '+e.message,'error')}
+}
+
+function getTlFiltered(){
+  const from=document.getElementById('tl-filter-from').value;
+  const to=document.getElementById('tl-filter-to').value;
+  const emp=document.getElementById('tl-filter-emp').value.trim().toLowerCase();
+  let f=tlAllEntries;
+  if(from)f=f.filter(e=>e.date>=from);
+  if(to)f=f.filter(e=>e.date<=to);
+  if(emp)f=f.filter(e=>(e.empId||'').toLowerCase().includes(emp)||(e.empName||'').toLowerCase().includes(emp));
+  return f;
+}
+
+function tlFilter(){
+  const filtered=getTlFiltered();
+  const el=document.getElementById('tl-entries-list');
+  const sum=document.getElementById('tl-filter-summary');
+  sum.textContent=filtered.length?`Showing ${filtered.length} entr${filtered.length===1?'y':'ies'} across ${new Set(filtered.map(e=>e.empId)).size} member(s)`:'';
+  el.innerHTML=filtered.length?filtered.map(e=>renderCard(e,true)).join(''):'<div class="empty-state"><div class="empty-icon">&#128269;</div>No entries match.</div>';
+}
+
+function clearTlFilter(){document.getElementById('tl-filter-from').value='';document.getElementById('tl-filter-to').value='';document.getElementById('tl-filter-emp').value='';tlFilter()}
+
+function exportTlExcel(){
+  const f=getTlFiltered();
+  if(!f.length){alert('No entries to export.');return}
+  const btn=document.getElementById('tl-export-btn');
+  btn.disabled=true;btn.textContent='Exporting...';
+  try{doExport(f,'tl-journal')}catch(e){alert('Export failed: '+e.message)}
+  btn.disabled=false;btn.innerHTML='&#8595; Export to Excel';
+}
+
+/* ── Admin ── */
+async function fetchAllEntries(){
+  const root=await ghGet('entries');
+  if(!root||!Array.isArray(root))return[];
+  const entries=[];
+  for(const dir of root.filter(f=>f.type==='dir')){
+    const files=await ghGet(dir.path);
+    if(!files||!Array.isArray(files))continue;
+    for(const f of files.filter(x=>x.name.endsWith('.json'))){
+      const r=await ghGet(f.path);
+      if(r){try{entries.push(decode(r))}catch(e){}}
+    }
   }
+  entries.sort((a,b)=>b.date.localeCompare(a.date));
+  return entries;
 }
 
-async function saveEntry() {
-  const btn = document.getElementById('save-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spin"></span>Saving...';
-  showMsg('emp-form-msg', '', '');
-  const path = empFilePath(currentUser.id, currentUser.name, todayStr());
-  const data = {
-    empId: currentUser.id,
-    empName: currentUser.name,
-    date: todayStr(),
-    did: document.getElementById('f-did').value,
-    planned: document.getElementById('f-planned').value,
-    blockers: document.getElementById('f-blockers').value,
-    hours: parseFloat(document.getElementById('f-hours').value) || 0,
-    notes: document.getElementById('f-notes').value,
-    savedAt: new Date().toISOString()
-  };
-  try {
-    const existing = await ghGetFile(path);
-    await ghPutFile(path, JSON.stringify(data, null, 2), existing ? existing.sha : null);
-    showMsg('emp-form-msg', '&#10003; Entry saved to GitHub successfully!', 'success');
-    document.getElementById('today-status-badge').innerHTML = '&#10003; Saved';
-    document.getElementById('today-status-badge').className = 'badge badge-success';
-  } catch(e) {
-    showMsg('emp-form-msg', 'Save failed: ' + e.message, 'error');
-  }
-  btn.disabled = false;
-  btn.innerHTML = '&#8593; Save to GitHub';
+async function loadAdminData(){
+  showMsg('admin-msg','<span class="spin"></span>Loading all entries...','info');
+  document.getElementById('admin-entries-list').innerHTML='';
+  document.getElementById('admin-stats').innerHTML='';
+  try{
+    allEntries=await fetchAllEntries();
+    const total=new Set(allEntries.map(e=>e.empId)).size;
+    const tod=allEntries.filter(e=>e.date===todayStr()).length;
+    const blk=allEntries.filter(e=>e.blockers&&e.blockers.trim()).length;
+    const avg=allEntries.length?Math.round(allEntries.reduce((s,e)=>s+(e.hours||0),0)/allEntries.length*10)/10:0;
+    document.getElementById('admin-stats').innerHTML=`
+      <div class="stat"><div class="stat-label">Employees</div><div class="stat-value">${total}</div></div>
+      <div class="stat"><div class="stat-label">Total entries</div><div class="stat-value">${allEntries.length}</div></div>
+      <div class="stat"><div class="stat-label">Today's logs</div><div class="stat-value">${tod}</div></div>
+      <div class="stat"><div class="stat-label">With blockers</div><div class="stat-value">${blk}</div></div>
+      <div class="stat"><div class="stat-label">Avg hours</div><div class="stat-value">${avg}</div></div>`;
+    document.getElementById('admin-filter-from').value=todayStr();
+    document.getElementById('admin-filter-to').value=todayStr();
+    showMsg('admin-msg','');adminFilter();
+  } catch(e){showMsg('admin-msg','Error: '+e.message,'error')}
 }
 
-function empTab(tab) {
-  document.getElementById('tab-today-btn').classList.toggle('active', tab === 'today');
-  document.getElementById('tab-history-btn').classList.toggle('active', tab === 'history');
-  document.getElementById('emp-tab-today').style.display = tab === 'today' ? 'block' : 'none';
-  document.getElementById('emp-tab-history').style.display = tab === 'history' ? 'block' : 'none';
-  if (tab === 'history') loadEmpHistory();
+function getAdminFiltered(){
+  const from=document.getElementById('admin-filter-from').value;
+  const to=document.getElementById('admin-filter-to').value;
+  const emp=document.getElementById('admin-filter-emp').value.trim().toLowerCase();
+  let f=allEntries;
+  if(from)f=f.filter(e=>e.date>=from);
+  if(to)f=f.filter(e=>e.date<=to);
+  if(emp)f=f.filter(e=>(e.empId||'').toLowerCase().includes(emp)||(e.empName||'').toLowerCase().includes(emp));
+  return f;
 }
 
-async function loadEmpHistory() {
-  const el = document.getElementById('emp-history-list');
-  el.innerHTML = '<div class="loading"><span class="spin"></span>Loading entries...</div>';
-  try {
-    const safe = currentUser.name.replace(/[^a-zA-Z0-9]/g, '_');
-    const dir = await ghRequest(`entries/${currentUser.id}_${safe}`, 'GET');
-    if (!dir || !Array.isArray(dir)) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries found.</div>'; return; }
-    const files = dir.filter(f => f.name.endsWith('.json')).sort((a, b) => b.name.localeCompare(a.name));
-    if (!files.length) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries found.</div>'; return; }
-    const entries = await Promise.all(files.slice(0, 30).map(async f => {
-      const r = await ghGetFile(f.path);
-      return r ? JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g, ''))))) : null;
-    }));
-    el.innerHTML = entries.filter(Boolean).map(e => renderEntryCard(e, false)).join('');
-  } catch(err) {
-    el.innerHTML = `<div class="msg msg-error">Error loading history: ${err.message}</div>`;
-  }
+function adminFilter(){
+  const filtered=getAdminFiltered();
+  const el=document.getElementById('admin-entries-list');
+  const sum=document.getElementById('admin-filter-summary');
+  sum.textContent=filtered.length?`Showing ${filtered.length} entr${filtered.length===1?'y':'ies'} across ${new Set(filtered.map(e=>e.empId)).size} employee(s)`:'';
+  el.innerHTML=filtered.length?filtered.map(e=>renderCard(e,true)).join(''):'<div class="empty-state"><div class="empty-icon">&#128269;</div>No entries match.</div>';
 }
 
-function renderEntryCard(e, showEmp = true) {
-  const hasBlocker = e.blockers && e.blockers.trim();
-  const empInfo = showEmp ? `<div class="entry-emp">${e.empId} &mdash; ${e.empName}</div>` : '';
-  return `<div class="entry-card">
-    <div class="entry-header">
-      <div>
-        <div class="entry-date">${formatDate(e.date)} &mdash; ${formatDay(e.date)}</div>
-        ${empInfo}
-      </div>
-      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+function clearAdminFilter(){document.getElementById('admin-filter-from').value='';document.getElementById('admin-filter-to').value='';document.getElementById('admin-filter-emp').value='';adminFilter()}
+
+function exportToExcel(){
+  const f=getAdminFiltered();
+  if(!f.length){alert('No entries to export.');return}
+  const btn=document.getElementById('export-btn');
+  btn.disabled=true;btn.textContent='Exporting...';
+  try{doExport(f,'admin-journal')}catch(e){alert('Export failed: '+e.message)}
+  btn.disabled=false;btn.innerHTML='&#8595; Export to Excel';
+}
+
+/* ── Shared ── */
+function renderCard(e,showEmp=true){
+  const hasBlocker=e.blockers&&e.blockers.trim();
+  const roleBadge=e.role==='techlead'?'<span class="badge badge-tl" style="margin-left:6px">Tech Lead</span>':'';
+  const empInfo=showEmp?`<div class="entry-emp">${e.empId} &mdash; ${e.empName}${roleBadge}</div>`:'';
+  return`<div class="entry-card">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px">
+      <div><div class="entry-date">${formatDate(e.date)} &mdash; ${formatDay(e.date)}</div>${empInfo}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
         <span class="badge badge-neutral">&#9201; ${e.hours}h</span>
-        ${hasBlocker ? '<span class="badge badge-danger">&#9888; Blocker</span>' : ''}
+        ${hasBlocker?'<span class="badge badge-danger">&#9888; Blocker</span>':''}
       </div>
     </div>
     <hr class="divider" style="margin:10px 0">
-    <div class="entry-section">
-      <div class="entry-section-label">&#10003; What I did</div>
-      <div class="entry-section-text">${e.did || '—'}</div>
-    </div>
-    <div class="entry-section">
-      <div class="entry-section-label">&#8594; Planned tomorrow</div>
-      <div class="entry-section-text">${e.planned || '—'}</div>
-    </div>
-    ${hasBlocker ? `<div class="entry-section"><div class="entry-section-label" style="color:var(--danger)">&#9888; Blockers</div><div class="entry-section-text" style="color:var(--danger)">${e.blockers}</div></div>` : ''}
-    ${e.notes && e.notes.trim() ? `<div class="entry-section"><div class="entry-section-label">&#128221; Notes</div><div class="entry-section-text" style="color:var(--text2)">${e.notes}</div></div>` : ''}
+    <div class="entry-section"><div class="entry-section-label">&#10003; What I did</div><div class="entry-section-text">${e.did||'—'}</div></div>
+    <div class="entry-section"><div class="entry-section-label">&#8594; Planned tomorrow</div><div class="entry-section-text">${e.planned||'—'}</div></div>
+    ${hasBlocker?`<div class="entry-section"><div class="entry-section-label" style="color:var(--danger)">&#9888; Blockers</div><div class="entry-section-text" style="color:var(--danger)">${e.blockers}</div></div>`:''}
+    ${e.notes&&e.notes.trim()?`<div class="entry-section"><div class="entry-section-label">&#128221; Notes</div><div class="entry-section-text" style="color:var(--text2)">${e.notes}</div></div>`:''}
   </div>`;
 }
 
-async function loadAdminData() {
-  const el = document.getElementById('admin-entries-list');
-  const statsEl = document.getElementById('admin-stats');
-  showMsg('admin-msg', '<span class="spin"></span>Loading all employee entries from GitHub...', 'info');
-  el.innerHTML = '';
-  statsEl.innerHTML = '';
-  try {
-    const root = await ghRequest('entries', 'GET');
-    if (!root || !Array.isArray(root)) {
-      showMsg('admin-msg', 'No entries found yet. Employees need to save their first log.', 'info');
-      return;
-    }
-    const empDirs = root.filter(f => f.type === 'dir');
-    allEntries = [];
-    for (const dir of empDirs) {
-      const files = await ghRequest(dir.path, 'GET');
-      if (!files || !Array.isArray(files)) continue;
-      for (const f of files.filter(x => x.name.endsWith('.json'))) {
-        const r = await ghGetFile(f.path);
-        if (r) {
-          try { allEntries.push(JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g, '')))))); } catch(e) {}
-        }
-      }
-    }
-    allEntries.sort((a, b) => b.date.localeCompare(a.date));
-    const totalEmp = new Set(allEntries.map(e => e.empId)).size;
-    const todayEntries = allEntries.filter(e => e.date === todayStr());
-    const withBlockers = allEntries.filter(e => e.blockers && e.blockers.trim()).length;
-    const avgHours = allEntries.length ? Math.round(allEntries.reduce((s, e) => s + (e.hours || 0), 0) / allEntries.length * 10) / 10 : 0;
-    statsEl.innerHTML = `
-      <div class="stat"><div class="stat-label">Employees</div><div class="stat-value">${totalEmp}</div></div>
-      <div class="stat"><div class="stat-label">Total entries</div><div class="stat-value">${allEntries.length}</div></div>
-      <div class="stat"><div class="stat-label">Today's logs</div><div class="stat-value">${todayEntries.length}</div></div>
-      <div class="stat"><div class="stat-label">With blockers</div><div class="stat-value">${withBlockers}</div></div>
-      <div class="stat"><div class="stat-label">Avg hours</div><div class="stat-value">${avgHours}</div></div>`;
-    document.getElementById('admin-filter-from').value = todayStr();
-    document.getElementById('admin-filter-to').value = todayStr();
-    showMsg('admin-msg', '', '');
-    adminFilter();
-  } catch(err) {
-    showMsg('admin-msg', 'Error loading data: ' + err.message, 'error');
-  }
+function doExport(entries,prefix){
+  const rows=entries.map(e=>({'Date':e.date,'Day':formatDay(e.date),'Role':e.role||'employee','Employee ID':e.empId||'','Employee Name':e.empName||'','What I Did Today':e.did||'','Planned for Tomorrow':e.planned||'','Blockers / Issues':e.blockers||'','Hours Worked':e.hours||0,'Notes':e.notes||'','Saved At':e.savedAt?new Date(e.savedAt).toLocaleString('en-IN'):''}));
+  const ws=XLSX.utils.json_to_sheet(rows);
+  ws['!cols']=[12,12,12,14,20,50,50,40,14,40,20].map(w=>({wch:w}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Daily Journal');
+  XLSX.writeFile(wb,`${prefix}_${todayStr()}.xlsx`);
 }
 
-function clearAdminFilter() {
-  document.getElementById('admin-filter-from').value = '';
-  document.getElementById('admin-filter-to').value = '';
-  document.getElementById('admin-filter-emp').value = '';
-  adminFilter();
-}
-
-function getFilteredEntries() {
-  const fromVal = document.getElementById('admin-filter-from').value;
-  const toVal = document.getElementById('admin-filter-to').value;
-  const empVal = document.getElementById('admin-filter-emp').value.trim().toLowerCase();
-  let filtered = allEntries;
-  if (fromVal) filtered = filtered.filter(e => e.date >= fromVal);
-  if (toVal) filtered = filtered.filter(e => e.date <= toVal);
-  if (empVal) filtered = filtered.filter(e =>
-    (e.empId || '').toLowerCase().includes(empVal) ||
-    (e.empName || '').toLowerCase().includes(empVal)
-  );
-  return filtered;
-}
-
-function adminFilter() {
-  const filtered = getFilteredEntries();
-  const el = document.getElementById('admin-entries-list');
-  const summary = document.getElementById('admin-filter-summary');
-  const empSet = new Set(filtered.map(e => e.empId));
-  summary.textContent = filtered.length
-    ? `Showing ${filtered.length} entr${filtered.length === 1 ? 'y' : 'ies'} across ${empSet.size} employee${empSet.size === 1 ? '' : 's'}`
-    : '';
-  if (!filtered.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128269;</div>No entries match the filter.</div>';
-    return;
-  }
-  el.innerHTML = filtered.map(e => renderEntryCard(e, true)).join('');
-}
-
-function exportToExcel() {
-  const filtered = getFilteredEntries();
-  if (!filtered.length) { alert('No entries to export. Adjust your filters first.'); return; }
-  const btn = document.getElementById('export-btn');
-  btn.disabled = true;
-  btn.textContent = 'Exporting...';
-  try {
-    const rows = filtered.map(e => ({
-      'Date': e.date,
-      'Day': formatDay(e.date),
-      'Employee ID': e.empId || '',
-      'Employee Name': e.empName || '',
-      'What I Did Today': e.did || '',
-      'Planned for Tomorrow': e.planned || '',
-      'Blockers / Issues': e.blockers || '',
-      'Hours Worked': e.hours || 0,
-      'Notes': e.notes || '',
-      'Saved At': e.savedAt ? new Date(e.savedAt).toLocaleString('en-IN') : ''
-    }));
-    const ws = XLSX.utils.json_to_sheet(rows);
-    const colWidths = [12,12,14,20,50,50,40,14,40,20];
-    ws['!cols'] = colWidths.map(w => ({ wch: w }));
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Daily Journal');
-    const fromVal = document.getElementById('admin-filter-from').value;
-    const toVal = document.getElementById('admin-filter-to').value;
-    const empVal = document.getElementById('admin-filter-emp').value.trim();
-    let filename = 'daily-journal';
-    if (fromVal) filename += '_' + fromVal;
-    if (toVal && toVal !== fromVal) filename += '_to_' + toVal;
-    if (empVal) filename += '_' + empVal.replace(/\s+/g, '_');
-    filename += '.xlsx';
-    XLSX.writeFile(wb, filename);
-  } catch(err) {
-    alert('Export failed: ' + err.message);
-  }
-  btn.disabled = false;
-  btn.innerHTML = '&#8595; Export to Excel';
-}
-
-
-function clearPin() {
-  for (let i = 0; i < 4; i++) {
-    const el = document.getElementById('pin' + i);
-    el.value = '';
-    el.classList.remove('filled');
-  }
-}
-
-function pinInput(idx) {
-  const el = document.getElementById('pin' + idx);
-  const val = el.value.replace(/\D/g, '');
-  el.value = val.slice(-1);
-  if (el.value) {
-    el.classList.add('filled');
-    if (idx < 3) document.getElementById('pin' + (idx + 1)).focus();
-    else verifyPin();
-  } else {
-    el.classList.remove('filled');
-  }
-}
-
-function pinKey(e, idx) {
-  if (e.key === 'Backspace' && !document.getElementById('pin' + idx).value && idx > 0) {
-    const prev = document.getElementById('pin' + (idx - 1));
-    prev.value = '';
-    prev.classList.remove('filled');
-    prev.focus();
-  }
-}
-
-function verifyPin() {
-  const entered = [0,1,2,3].map(i => document.getElementById('pin'+i).value).join('');
-  if (entered.length < 4) { showMsg('pin-msg', 'Please enter all 4 digits.', 'error'); return; }
-  const c = getConfig();
-  const correctPin = (c && c.pin) ? c.pin : '1234';
-  if (entered === correctPin) {
-    showMsg('pin-msg', '', '');
-    showScreen('screen-config');
-    if (c) {
-      document.getElementById('cfg-owner').value = c.owner || '';
-      document.getElementById('cfg-repo').value = c.repo || '';
-      document.getElementById('cfg-token').value = c.token || '';
-      document.getElementById('cfg-adminpw').value = c.adminpw || '';
-      document.getElementById('cfg-pin').value = c.pin || '1234';
-    }
-  } else {
-    showMsg('pin-msg', '&#10007; Incorrect PIN. Try again.', 'error');
-    clearPin();
-    setTimeout(() => document.getElementById('pin0').focus(), 100);
-  }
-}
-
-(function init() {
-  const c = getConfig();
-  if (!c || !c.token || !c.repo) { showScreen('screen-config'); }
-  else { showScreen('screen-login'); }
-})();
+/* ── Start ── */
+initApp();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
