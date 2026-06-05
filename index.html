@@ -648,11 +648,29 @@ textarea {
 
     <div id="admin-stats" class="stat-grid"></div>
 
-    <div class="filter-row">
-      <input type="date" id="admin-filter-date" onchange="adminFilter()">
-      <input type="text" id="admin-filter-emp" placeholder="Search by Emp ID or name" oninput="adminFilter()">
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">&#128269; Filter entries</div>
+      <div class="row2" style="margin-bottom:10px">
+        <div class="field" style="margin-bottom:0">
+          <label>From date</label>
+          <input type="date" id="admin-filter-from" onchange="adminFilter()">
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>To date</label>
+          <input type="date" id="admin-filter-to" onchange="adminFilter()">
+        </div>
+      </div>
+      <div class="field" style="margin-bottom:10px">
+        <label>Employee (ID or name)</label>
+        <input type="text" id="admin-filter-emp" placeholder="Leave blank for all employees" oninput="adminFilter()">
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-secondary btn-sm" onclick="clearAdminFilter()">&#10005; Clear filters</button>
+        <button class="btn btn-primary btn-sm" onclick="exportToExcel()" id="export-btn" style="margin-left:auto">&#8595; Export to Excel</button>
+      </div>
     </div>
     <div id="admin-msg"></div>
+    <div id="admin-filter-summary" style="font-size:13px;color:var(--text2);margin-bottom:10px"></div>
     <div id="admin-entries-list"></div>
   </div>
 
@@ -926,7 +944,8 @@ async function loadAdminData() {
       <div class="stat"><div class="stat-label">Today's logs</div><div class="stat-value">${todayEntries.length}</div></div>
       <div class="stat"><div class="stat-label">With blockers</div><div class="stat-value">${withBlockers}</div></div>
       <div class="stat"><div class="stat-label">Avg hours</div><div class="stat-value">${avgHours}</div></div>`;
-    document.getElementById('admin-filter-date').value = todayStr();
+    document.getElementById('admin-filter-from').value = todayStr();
+    document.getElementById('admin-filter-to').value = todayStr();
     showMsg('admin-msg', '', '');
     adminFilter();
   } catch(err) {
@@ -934,22 +953,82 @@ async function loadAdminData() {
   }
 }
 
-function adminFilter() {
-  const dateVal = document.getElementById('admin-filter-date').value;
+function clearAdminFilter() {
+  document.getElementById('admin-filter-from').value = '';
+  document.getElementById('admin-filter-to').value = '';
+  document.getElementById('admin-filter-emp').value = '';
+  adminFilter();
+}
+
+function getFilteredEntries() {
+  const fromVal = document.getElementById('admin-filter-from').value;
+  const toVal = document.getElementById('admin-filter-to').value;
   const empVal = document.getElementById('admin-filter-emp').value.trim().toLowerCase();
   let filtered = allEntries;
-  if (dateVal) filtered = filtered.filter(e => e.date === dateVal);
+  if (fromVal) filtered = filtered.filter(e => e.date >= fromVal);
+  if (toVal) filtered = filtered.filter(e => e.date <= toVal);
   if (empVal) filtered = filtered.filter(e =>
     (e.empId || '').toLowerCase().includes(empVal) ||
     (e.empName || '').toLowerCase().includes(empVal)
   );
+  return filtered;
+}
+
+function adminFilter() {
+  const filtered = getFilteredEntries();
   const el = document.getElementById('admin-entries-list');
+  const summary = document.getElementById('admin-filter-summary');
+  const empSet = new Set(filtered.map(e => e.empId));
+  summary.textContent = filtered.length
+    ? `Showing ${filtered.length} entr${filtered.length === 1 ? 'y' : 'ies'} across ${empSet.size} employee${empSet.size === 1 ? '' : 's'}`
+    : '';
   if (!filtered.length) {
     el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128269;</div>No entries match the filter.</div>';
     return;
   }
   el.innerHTML = filtered.map(e => renderEntryCard(e, true)).join('');
 }
+
+function exportToExcel() {
+  const filtered = getFilteredEntries();
+  if (!filtered.length) { alert('No entries to export. Adjust your filters first.'); return; }
+  const btn = document.getElementById('export-btn');
+  btn.disabled = true;
+  btn.textContent = 'Exporting...';
+  try {
+    const rows = filtered.map(e => ({
+      'Date': e.date,
+      'Day': formatDay(e.date),
+      'Employee ID': e.empId || '',
+      'Employee Name': e.empName || '',
+      'What I Did Today': e.did || '',
+      'Planned for Tomorrow': e.planned || '',
+      'Blockers / Issues': e.blockers || '',
+      'Hours Worked': e.hours || 0,
+      'Notes': e.notes || '',
+      'Saved At': e.savedAt ? new Date(e.savedAt).toLocaleString('en-IN') : ''
+    }));
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const colWidths = [12,12,14,20,50,50,40,14,40,20];
+    ws['!cols'] = colWidths.map(w => ({ wch: w }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Daily Journal');
+    const fromVal = document.getElementById('admin-filter-from').value;
+    const toVal = document.getElementById('admin-filter-to').value;
+    const empVal = document.getElementById('admin-filter-emp').value.trim();
+    let filename = 'daily-journal';
+    if (fromVal) filename += '_' + fromVal;
+    if (toVal && toVal !== fromVal) filename += '_to_' + toVal;
+    if (empVal) filename += '_' + empVal.replace(/\s+/g, '_');
+    filename += '.xlsx';
+    XLSX.writeFile(wb, filename);
+  } catch(err) {
+    alert('Export failed: ' + err.message);
+  }
+  btn.disabled = false;
+  btn.innerHTML = '&#8595; Export to Excel';
+}
+
 
 function clearPin() {
   for (let i = 0; i < 4; i++) {
@@ -1009,5 +1088,6 @@ function verifyPin() {
   else { showScreen('screen-login'); }
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
