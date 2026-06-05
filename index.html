@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Work Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --border: #e2e0d8;
+  --border2: #d0cec4;
+  --text: #1a1917;
+  --text2: #6b6860;
+  --text3: #9e9b92;
+  --accent: #2d5a3d;
+  --accent-bg: #e8f0eb;
+  --accent-text: #1d3d28;
+  --warn: #92400e;
+  --warn-bg: #fef3c7;
+  --danger: #991b1b;
+  --danger-bg: #fde8e8;
+  --info: #1e3a5f;
+  --info-bg: #dbeafe;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.app {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+}
+
+.logo-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.logo-sub {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.card-title svg { color: var(--text3); }
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text2);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+input[type=text], input[type=password], input[type=number], input[type=date], textarea, select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.15s;
+  -webkit-appearance: none;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,90,61,0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.6;
+}
+
+.field { margin-bottom: 14px; }
+
+.field:last-child { margin-bottom: 0; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover { background: #234a32; border-color: #234a32; }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text2);
+  border-color: var(--border2);
+}
+
+.btn-secondary:hover { background: var(--surface2); color: var(--text); }
+
+.btn-full { width: 100%; }
+.btn-sm { padding: 7px 13px; font-size: 13px; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+
+.msg {
+  padding: 10px 13px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.msg-success { background: var(--accent-bg); color: var(--accent-text); }
+.msg-error { background: var(--danger-bg); color: var(--danger); }
+.msg-info { background: var(--info-bg); color: var(--info); }
+.msg-warn { background: var(--warn-bg); color: var(--warn); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.badge-success { background: var(--accent-bg); color: var(--accent-text); }
+.badge-warn { background: var(--warn-bg); color: var(--warn); }
+.badge-danger { background: var(--danger-bg); color: var(--danger); }
+.badge-info { background: var(--info-bg); color: var(--info); }
+.badge-neutral { background: var(--surface2); color: var(--text2); }
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+}
+
+.avatar-admin {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.nav-tab {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text2);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.nav-tab.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.stat-value { font-size: 22px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
+
+.entry-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s;
+}
+
+.entry-card:hover { border-color: var(--border2); }
+
+.entry-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.entry-date { font-size: 14px; font-weight: 600; color: var(--text); }
+.entry-emp { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 2px; }
+
+.entry-section { margin-bottom: 12px; }
+.entry-section:last-child { margin-bottom: 0; }
+.entry-section-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.entry-section-text { font-size: 14px; color: var(--text); white-space: pre-wrap; line-height: 1.6; }
+
+.filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-row input, .filter-row select { flex: 1; min-width: 130px; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.section-heading {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hours-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hours-row input[type=number] {
+  width: 90px;
+}
+
+.today-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.today-bar-date { font-size: 14px; font-weight: 500; color: var(--text); }
+.today-bar-day { font-size: 12px; color: var(--text3); margin-top: 1px; }
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+.empty-icon { font-size: 32px; margin-bottom: 10px; opacity: 0.4; }
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  color: var(--text3);
+  font-size: 14px;
+}
+
+.spin {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.top-user-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.user-info { display: flex; align-items: center; gap: 10px; }
+.user-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.user-id { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; }
+
+.config-note {
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: 'DM Sans', sans-serif;
+  padding: 0;
+}
+
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+@media (max-width: 480px) {
+  .row2 { grid-template-columns: 1fr; }
+  .filter-row { flex-direction: column; }
+}
+
+.help-text {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 5px;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="app-header">
+    <div class="logo">
+      <div class="logo-icon">&#9998;</div>
+      <div>
+        <div class="logo-text">Daily Journal</div>
+        <div class="logo-sub">Team work log</div>
+      </div>
+    </div>
+    <div id="header-actions"></div>
+  </div>
+
+  <!-- CONFIG SCREEN -->
+  <div id="screen-config" class="screen active">
+    <div class="card">
+      <div class="card-title">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg>
+        GitHub configuration
+      </div>
+      <div class="field">
+        <label>GitHub username</label>
+        <input type="text" id="cfg-owner" placeholder="e.g. yourusername">
+      </div>
+      <div class="field">
+        <label>Repository name</label>
+        <input type="text" id="cfg-repo" placeholder="e.g. team-daily-journal">
+      </div>
+      <div class="field">
+        <label>Personal access token (PAT)</label>
+        <input type="password" id="cfg-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+        <div class="help-text">Needs repo &gt; contents read &amp; write permission</div>
+      </div>
+      <div class="field">
+        <label>Admin password</label>
+        <input type="password" id="cfg-adminpw" placeholder="Set a password for admin login">
+      </div>
+      <div id="cfg-msg"></div>
+      <div style="margin-top:18px">
+        <button class="btn btn-primary btn-full" onclick="saveConfig()">Save &amp; continue &rarr;</button>
+      </div>
+    </div>
+    <div class="config-note">
+      &#128274; Config is stored in your browser only. Never transmitted anywhere except GitHub API.
+    </div>
+  </div>
+
+  <!-- LOGIN SCREEN -->
+  <div id="screen-login" class="screen">
+    <div class="card">
+      <div class="card-title">Sign in</div>
+      <div class="row2">
+        <div class="field">
+          <label>Employee ID</label>
+          <input type="text" id="login-empid" placeholder="e.g. EMP001" oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="field">
+          <label>Full name</label>
+          <input type="text" id="login-name" placeholder="e.g. Arun Kumar">
+        </div>
+      </div>
+      <div id="login-msg"></div>
+      <button class="btn btn-primary btn-full" onclick="loginEmployee()">Continue as employee &rarr;</button>
+      <hr class="divider">
+      <button class="btn btn-secondary btn-full" onclick="showScreen('screen-adminlogin')">&#128737; Admin login</button>
+    </div>
+    <div class="config-note">
+      <button class="link-btn" onclick="goConfig()">&#9881; Change GitHub config</button>
+    </div>
+  </div>
+
+  <!-- ADMIN LOGIN -->
+  <div id="screen-adminlogin" class="screen">
+    <div class="card">
+      <div class="card-title">&#128737; Admin access</div>
+      <div class="field">
+        <label>Admin password</label>
+        <input type="password" id="adminpw-input" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')loginAdmin()">
+      </div>
+      <div id="adminlogin-msg"></div>
+      <button class="btn btn-primary btn-full" onclick="loginAdmin()" style="margin-bottom:10px">Login as admin &rarr;</button>
+      <button class="btn btn-secondary btn-full" onclick="showScreen('screen-login')">&larr; Back</button>
+    </div>
+  </div>
+
+  <!-- EMPLOYEE SCREEN -->
+  <div id="screen-employee" class="screen">
+    <div class="top-user-bar">
+      <div class="user-info">
+        <div class="avatar" id="emp-avatar">AK</div>
+        <div>
+          <div class="user-name" id="emp-name-display">Arun Kumar</div>
+          <div class="user-id" id="emp-id-display">EMP001</div>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" id="tab-today-btn" onclick="empTab('today')">&#9998; Today's log</button>
+      <button class="nav-tab" id="tab-history-btn" onclick="empTab('history')">&#128337; My history</button>
+    </div>
+
+    <div id="emp-tab-today">
+      <div class="today-bar">
+        <div>
+          <div class="today-bar-date" id="today-date-label"></div>
+          <div class="today-bar-day" id="today-day-label"></div>
+        </div>
+        <span id="today-status-badge" class="badge badge-warn">Not saved</span>
+      </div>
+      <div id="emp-form-msg"></div>
+      <div class="card">
+        <div class="field">
+          <label>&#10003; What did I do today</label>
+          <textarea id="f-did" placeholder="Describe tasks completed today..."></textarea>
+        </div>
+        <div class="field">
+          <label>&#8594; What I plan to do tomorrow</label>
+          <textarea id="f-planned" placeholder="Tasks planned for tomorrow..."></textarea>
+        </div>
+        <div class="field">
+          <label>&#9888; Blockers / issues faced</label>
+          <textarea id="f-blockers" placeholder="Any blockers or issues? Leave blank if none." style="min-height:68px"></textarea>
+        </div>
+        <div class="field">
+          <label>&#9201; Hours worked</label>
+          <div class="hours-row">
+            <input type="number" id="f-hours" min="0" max="24" step="0.5" value="8">
+            <span style="font-size:13px;color:var(--text3)">hours</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>&#128221; Additional notes</label>
+          <textarea id="f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" id="save-btn" onclick="saveEntry()">&#8593; Save to GitHub</button>
+    </div>
+
+    <div id="emp-tab-history" style="display:none">
+      <div id="emp-history-list"></div>
+    </div>
+  </div>
+
+  <!-- ADMIN SCREEN -->
+  <div id="screen-admin" class="screen">
+    <div class="top-user-bar">
+      <div class="user-info">
+        <div class="avatar avatar-admin">&#128737;</div>
+        <div>
+          <div class="user-name">Admin panel</div>
+          <div class="user-id">All employee logs</div>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+    </div>
+
+    <div id="admin-stats" class="stat-grid"></div>
+
+    <div class="filter-row">
+      <input type="date" id="admin-filter-date" onchange="adminFilter()">
+      <input type="text" id="admin-filter-emp" placeholder="Search by Emp ID or name" oninput="adminFilter()">
+    </div>
+    <div id="admin-msg"></div>
+    <div id="admin-entries-list"></div>
+  </div>
+
+</div>
+
+<script>
+const CFG_KEY = 'djConfig_v2';
+let currentUser = null;
+let isAdmin = false;
+let allEntries = [];
+
+function getConfig() {
+  try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); } catch(e) { return null; }
+}
+function saveConfigData(o) { localStorage.setItem(CFG_KEY, JSON.stringify(o)); }
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showMsg(elId, text, type = 'info') {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.innerHTML = text ? `<div class="msg msg-${type}">${text}</div>` : '';
+}
+
+function goConfig() {
+  showScreen('screen-config');
+  const c = getConfig();
+  if (c) {
+    document.getElementById('cfg-owner').value = c.owner || '';
+    document.getElementById('cfg-repo').value = c.repo || '';
+    document.getElementById('cfg-token').value = c.token || '';
+    document.getElementById('cfg-adminpw').value = c.adminpw || '';
+  }
+}
+
+function saveConfig() {
+  const owner = document.getElementById('cfg-owner').value.trim();
+  const repo = document.getElementById('cfg-repo').value.trim();
+  const token = document.getElementById('cfg-token').value.trim();
+  const adminpw = document.getElementById('cfg-adminpw').value.trim();
+  if (!owner || !repo || !token || !adminpw) { showMsg('cfg-msg', 'All fields are required.', 'error'); return; }
+  saveConfigData({ owner, repo, token, adminpw });
+  showMsg('cfg-msg', '&#10003; Configuration saved!', 'success');
+  setTimeout(() => showScreen('screen-login'), 800);
+}
+
+async function ghRequest(path, method = 'GET', body = null) {
+  const c = getConfig();
+  if (!c) throw new Error('No config found.');
+  const opts = {
+    method,
+    headers: { 'Authorization': 'token ' + c.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(`https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`, opts);
+  if (r.status === 404 && method === 'GET') return null;
+  if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub API error'); }
+  return r.json();
+}
+
+async function ghGetFile(path) { return ghRequest(path, 'GET'); }
+
+async function ghPutFile(path, content, sha = null) {
+  const body = { message: `Journal: ${path}`, content: btoa(unescape(encodeURIComponent(content))) };
+  if (sha) body.sha = sha;
+  return ghRequest(path, 'PUT', body);
+}
+
+function todayStr() { return new Date().toISOString().slice(0, 10); }
+
+function empFolder(empId, empName) {
+  const safe = empName.replace(/[^a-zA-Z0-9]/g, '_');
+  return `entries/${empId}_${safe}`;
+}
+
+function empFilePath(empId, empName, date) {
+  return `${empFolder(empId, empName)}/${date}.json`;
+}
+
+function formatDate(d) {
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function formatDay(d) {
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-IN', { weekday: 'long' });
+}
+
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function loginEmployee() {
+  const id = document.getElementById('login-empid').value.trim();
+  const name = document.getElementById('login-name').value.trim();
+  if (!id || !name) { showMsg('login-msg', 'Please enter both Employee ID and name.', 'error'); return; }
+  const c = getConfig();
+  if (!c || !c.token) { showMsg('login-msg', 'GitHub not configured. Please set up config first.', 'error'); return; }
+  currentUser = { id, name };
+  isAdmin = false;
+  document.getElementById('emp-avatar').textContent = initials(name);
+  document.getElementById('emp-name-display').textContent = name;
+  document.getElementById('emp-id-display').textContent = id;
+  const t = todayStr();
+  document.getElementById('today-date-label').textContent = formatDate(t);
+  document.getElementById('today-day-label').textContent = formatDay(t);
+  showScreen('screen-employee');
+  loadTodayEntry();
+}
+
+function loginAdmin() {
+  const pw = document.getElementById('adminpw-input').value;
+  const c = getConfig();
+  if (!c) { showMsg('adminlogin-msg', 'GitHub not configured.', 'error'); return; }
+  if (pw !== c.adminpw) { showMsg('adminlogin-msg', 'Incorrect password.', 'error'); return; }
+  isAdmin = true; currentUser = null;
+  document.getElementById('adminpw-input').value = '';
+  showScreen('screen-admin');
+  loadAdminData();
+}
+
+function logout() {
+  currentUser = null; isAdmin = false; allEntries = [];
+  document.getElementById('login-empid').value = '';
+  document.getElementById('login-name').value = '';
+  showScreen('screen-login');
+}
+
+async function loadTodayEntry() {
+  showMsg('emp-form-msg', '', '');
+  const path = empFilePath(currentUser.id, currentUser.name, todayStr());
+  try {
+    const f = await ghGetFile(path);
+    if (f) {
+      const data = JSON.parse(decodeURIComponent(escape(atob(f.content.replace(/\n/g, '')))));
+      document.getElementById('f-did').value = data.did || '';
+      document.getElementById('f-planned').value = data.planned || '';
+      document.getElementById('f-blockers').value = data.blockers || '';
+      document.getElementById('f-hours').value = data.hours || 8;
+      document.getElementById('f-notes').value = data.notes || '';
+      document.getElementById('today-status-badge').textContent = '&#10003; Saved';
+      document.getElementById('today-status-badge').className = 'badge badge-success';
+    } else {
+      document.getElementById('today-status-badge').textContent = 'Not saved';
+      document.getElementById('today-status-badge').className = 'badge badge-warn';
+    }
+  } catch(e) {
+    showMsg('emp-form-msg', 'Could not load today\'s entry: ' + e.message, 'error');
+  }
+}
+
+async function saveEntry() {
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span>Saving...';
+  showMsg('emp-form-msg', '', '');
+  const path = empFilePath(currentUser.id, currentUser.name, todayStr());
+  const data = {
+    empId: currentUser.id,
+    empName: currentUser.name,
+    date: todayStr(),
+    did: document.getElementById('f-did').value,
+    planned: document.getElementById('f-planned').value,
+    blockers: document.getElementById('f-blockers').value,
+    hours: parseFloat(document.getElementById('f-hours').value) || 0,
+    notes: document.getElementById('f-notes').value,
+    savedAt: new Date().toISOString()
+  };
+  try {
+    const existing = await ghGetFile(path);
+    await ghPutFile(path, JSON.stringify(data, null, 2), existing ? existing.sha : null);
+    showMsg('emp-form-msg', '&#10003; Entry saved to GitHub successfully!', 'success');
+    document.getElementById('today-status-badge').innerHTML = '&#10003; Saved';
+    document.getElementById('today-status-badge').className = 'badge badge-success';
+  } catch(e) {
+    showMsg('emp-form-msg', 'Save failed: ' + e.message, 'error');
+  }
+  btn.disabled = false;
+  btn.innerHTML = '&#8593; Save to GitHub';
+}
+
+function empTab(tab) {
+  document.getElementById('tab-today-btn').classList.toggle('active', tab === 'today');
+  document.getElementById('tab-history-btn').classList.toggle('active', tab === 'history');
+  document.getElementById('emp-tab-today').style.display = tab === 'today' ? 'block' : 'none';
+  document.getElementById('emp-tab-history').style.display = tab === 'history' ? 'block' : 'none';
+  if (tab === 'history') loadEmpHistory();
+}
+
+async function loadEmpHistory() {
+  const el = document.getElementById('emp-history-list');
+  el.innerHTML = '<div class="loading"><span class="spin"></span>Loading entries...</div>';
+  try {
+    const safe = currentUser.name.replace(/[^a-zA-Z0-9]/g, '_');
+    const dir = await ghRequest(`entries/${currentUser.id}_${safe}`, 'GET');
+    if (!dir || !Array.isArray(dir)) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries found.</div>'; return; }
+    const files = dir.filter(f => f.name.endsWith('.json')).sort((a, b) => b.name.localeCompare(a.name));
+    if (!files.length) { el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries found.</div>'; return; }
+    const entries = await Promise.all(files.slice(0, 30).map(async f => {
+      const r = await ghGetFile(f.path);
+      return r ? JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g, ''))))) : null;
+    }));
+    el.innerHTML = entries.filter(Boolean).map(e => renderEntryCard(e, false)).join('');
+  } catch(err) {
+    el.innerHTML = `<div class="msg msg-error">Error loading history: ${err.message}</div>`;
+  }
+}
+
+function renderEntryCard(e, showEmp = true) {
+  const hasBlocker = e.blockers && e.blockers.trim();
+  const empInfo = showEmp ? `<div class="entry-emp">${e.empId} &mdash; ${e.empName}</div>` : '';
+  return `<div class="entry-card">
+    <div class="entry-header">
+      <div>
+        <div class="entry-date">${formatDate(e.date)} &mdash; ${formatDay(e.date)}</div>
+        ${empInfo}
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+        <span class="badge badge-neutral">&#9201; ${e.hours}h</span>
+        ${hasBlocker ? '<span class="badge badge-danger">&#9888; Blocker</span>' : ''}
+      </div>
+    </div>
+    <hr class="divider" style="margin:10px 0">
+    <div class="entry-section">
+      <div class="entry-section-label">&#10003; What I did</div>
+      <div class="entry-section-text">${e.did || '—'}</div>
+    </div>
+    <div class="entry-section">
+      <div class="entry-section-label">&#8594; Planned tomorrow</div>
+      <div class="entry-section-text">${e.planned || '—'}</div>
+    </div>
+    ${hasBlocker ? `<div class="entry-section"><div class="entry-section-label" style="color:var(--danger)">&#9888; Blockers</div><div class="entry-section-text" style="color:var(--danger)">${e.blockers}</div></div>` : ''}
+    ${e.notes && e.notes.trim() ? `<div class="entry-section"><div class="entry-section-label">&#128221; Notes</div><div class="entry-section-text" style="color:var(--text2)">${e.notes}</div></div>` : ''}
+  </div>`;
+}
+
+async function loadAdminData() {
+  const el = document.getElementById('admin-entries-list');
+  const statsEl = document.getElementById('admin-stats');
+  showMsg('admin-msg', '<span class="spin"></span>Loading all employee entries from GitHub...', 'info');
+  el.innerHTML = '';
+  statsEl.innerHTML = '';
+  try {
+    const root = await ghRequest('entries', 'GET');
+    if (!root || !Array.isArray(root)) {
+      showMsg('admin-msg', 'No entries found yet. Employees need to save their first log.', 'info');
+      return;
+    }
+    const empDirs = root.filter(f => f.type === 'dir');
+    allEntries = [];
+    for (const dir of empDirs) {
+      const files = await ghRequest(dir.path, 'GET');
+      if (!files || !Array.isArray(files)) continue;
+      for (const f of files.filter(x => x.name.endsWith('.json'))) {
+        const r = await ghGetFile(f.path);
+        if (r) {
+          try { allEntries.push(JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g, '')))))); } catch(e) {}
+        }
+      }
+    }
+    allEntries.sort((a, b) => b.date.localeCompare(a.date));
+    const totalEmp = new Set(allEntries.map(e => e.empId)).size;
+    const todayEntries = allEntries.filter(e => e.date === todayStr());
+    const withBlockers = allEntries.filter(e => e.blockers && e.blockers.trim()).length;
+    const avgHours = allEntries.length ? Math.round(allEntries.reduce((s, e) => s + (e.hours || 0), 0) / allEntries.length * 10) / 10 : 0;
+    statsEl.innerHTML = `
+      <div class="stat"><div class="stat-label">Employees</div><div class="stat-value">${totalEmp}</div></div>
+      <div class="stat"><div class="stat-label">Total entries</div><div class="stat-value">${allEntries.length}</div></div>
+      <div class="stat"><div class="stat-label">Today's logs</div><div class="stat-value">${todayEntries.length}</div></div>
+      <div class="stat"><div class="stat-label">With blockers</div><div class="stat-value">${withBlockers}</div></div>
+      <div class="stat"><div class="stat-label">Avg hours</div><div class="stat-value">${avgHours}</div></div>`;
+    document.getElementById('admin-filter-date').value = todayStr();
+    showMsg('admin-msg', '', '');
+    adminFilter();
+  } catch(err) {
+    showMsg('admin-msg', 'Error loading data: ' + err.message, 'error');
+  }
+}
+
+function adminFilter() {
+  const dateVal = document.getElementById('admin-filter-date').value;
+  const empVal = document.getElementById('admin-filter-emp').value.trim().toLowerCase();
+  let filtered = allEntries;
+  if (dateVal) filtered = filtered.filter(e => e.date === dateVal);
+  if (empVal) filtered = filtered.filter(e =>
+    (e.empId || '').toLowerCase().includes(empVal) ||
+    (e.empName || '').toLowerCase().includes(empVal)
+  );
+  const el = document.getElementById('admin-entries-list');
+  if (!filtered.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">&#128269;</div>No entries match the filter.</div>';
+    return;
+  }
+  el.innerHTML = filtered.map(e => renderEntryCard(e, true)).join('');
+}
+
+(function init() {
+  const c = getConfig();
+  if (!c || !c.token || !c.repo) { showScreen('screen-config'); }
+  else { showScreen('screen-login'); }
+})();
+</script>
+</body>
+</html>
