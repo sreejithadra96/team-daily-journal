@@ -14,6 +14,7 @@
   --danger:#991b1b;--danger-bg:#fde8e8;
   --info:#1e3a5f;--info-bg:#dbeafe;
   --tl:#5b21b6;--tl-bg:#ede9fe;
+  --co:#0e7490;--co-bg:#cffafe;
   --radius:10px;--radius-sm:6px;
   --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
 }
@@ -39,6 +40,8 @@ textarea{resize:vertical;min-height:88px;line-height:1.6}
 .btn-secondary:hover{background:var(--surface2);color:var(--text)}
 .btn-tl{background:var(--tl);color:#fff;border-color:var(--tl)}
 .btn-tl:hover{background:#4c1d95}
+.btn-co{background:var(--co);color:#fff;border-color:var(--co)}
+.btn-co:hover{background:#0c647a}
 .btn-danger{background:var(--danger-bg);color:var(--danger);border-color:#fca5a5}
 .btn-full{width:100%}
 .btn-sm{padding:7px 13px;font-size:13px}
@@ -54,9 +57,11 @@ textarea{resize:vertical;min-height:88px;line-height:1.6}
 .badge-danger{background:var(--danger-bg);color:var(--danger)}
 .badge-neutral{background:var(--surface2);color:var(--text2)}
 .badge-tl{background:var(--tl-bg);color:var(--tl)}
+.badge-co{background:var(--co-bg);color:var(--co)}
 .avatar{width:38px;height:38px;border-radius:50%;background:var(--accent-bg);color:var(--accent-text);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;font-family:'DM Mono',monospace}
 .avatar-admin{background:var(--warn-bg);color:var(--warn)}
 .avatar-tl{background:var(--tl-bg);color:var(--tl)}
+.avatar-co{background:var(--co-bg);color:var(--co)}
 .divider{border:none;border-top:1px solid var(--border);margin:16px 0}
 .nav-tabs{display:flex;gap:4px;background:var(--surface2);border-radius:var(--radius-sm);padding:4px;margin-bottom:20px}
 .nav-tab{flex:1;padding:8px 12px;border:none;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:var(--text2);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
@@ -292,6 +297,58 @@ textarea{resize:vertical;min-height:88px;line-height:1.6}
   </div>
 </div>
 
+<!-- COORDINATOR SCREEN -->
+<div id="screen-coordinator" class="screen">
+  <div class="top-user-bar">
+    <div class="user-info">
+      <div class="avatar avatar-co">&#128203;</div>
+      <div><div class="user-name" id="co-name-display"></div><div class="user-id" id="co-id-display"></div></div>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="co-tab-log-btn" onclick="coTab('log')">&#9998; My log</button>
+    <button class="nav-tab" id="co-tab-team-btn" onclick="coTab('team')">&#128203; Team view</button>
+  </div>
+  <div id="co-tab-log">
+    <div class="today-bar">
+      <div><div class="today-bar-date" id="co-date-label"></div><div class="today-bar-day" id="co-day-label"></div></div>
+      <span id="co-status-badge" class="badge badge-warn">Not saved</span>
+    </div>
+    <div id="co-form-msg"></div>
+    <div class="card">
+      <div class="field"><label>&#10003; What did I do today</label><textarea id="co-f-did" placeholder="Describe tasks completed today..."></textarea></div>
+      <div class="field"><label>&#8594; What I plan to do tomorrow</label><textarea id="co-f-planned" placeholder="Tasks planned for tomorrow..."></textarea></div>
+      <div class="field"><label>&#9888; Blockers / issues faced</label><textarea id="co-f-blockers" placeholder="Any blockers?" style="min-height:68px"></textarea></div>
+      <div class="field"><label>&#9201; Hours worked</label><div class="hours-row"><input type="number" id="co-f-hours" min="0" max="24" step="0.5" value="8"><span style="font-size:13px;color:var(--text3)">hours</span></div></div>
+      <div class="field"><label>&#128221; Notes</label><textarea id="co-f-notes" placeholder="Any other remarks..." style="min-height:68px"></textarea></div>
+    </div>
+    <button class="btn btn-co btn-full" id="co-save-btn" onclick="saveCoEntry()">&#8593; Save to GitHub</button>
+    <div style="margin-top:20px">
+      <p style="font-size:12px;font-weight:600;color:var(--text3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px">My history</p>
+      <div id="co-history-list"></div>
+    </div>
+  </div>
+  <div id="co-tab-team" style="display:none">
+    <div id="co-stats" class="stat-grid"></div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">&#128269; Filter</div>
+      <div class="row2" style="margin-bottom:10px">
+        <div class="field" style="margin-bottom:0"><label>From</label><input type="date" id="co-from" onchange="coFilter()"></div>
+        <div class="field" style="margin-bottom:0"><label>To</label><input type="date" id="co-to" onchange="coFilter()"></div>
+      </div>
+      <div class="field" style="margin-bottom:10px"><label>Employee</label><input type="text" id="co-emp" placeholder="ID or name — blank for all" oninput="coFilter()"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-secondary btn-sm" onclick="clearCoFilter()">&#10005; Clear</button>
+        <button class="btn btn-co btn-sm" id="co-export-btn" onclick="exportExcel('co')" style="margin-left:auto">&#8595; Export Excel</button>
+      </div>
+    </div>
+    <div id="co-msg"></div>
+    <div id="co-summary" style="font-size:13px;color:var(--text2);margin-bottom:10px"></div>
+    <div id="co-list"></div>
+  </div>
+</div>
+
 <!-- ADMIN SCREEN -->
 <div id="screen-admin" class="screen">
   <div class="top-user-bar">
@@ -331,6 +388,7 @@ let registry = [];
 let currentUser = null;
 let allEntries = [];
 let tlEntries  = [];
+let coEntries  = [];
 
 /* helpers */
 function $(id){return document.getElementById(id)}
@@ -454,6 +512,7 @@ function addRegRow(id='',name='',role='employee'){
     <select style="padding:7px 10px;font-size:13px">
       <option value="employee"${role==='employee'?' selected':''}>Employee</option>
       <option value="techlead"${role==='techlead'?' selected':''}>Tech Lead</option>
+      <option value="coordinator"${role==='coordinator'?' selected':''}>Post IT Coordinator</option>
     </select>
     <button class="btn btn-danger btn-sm" onclick="this.closest('.reg-row').remove()">&#10005;</button>`;
   c.appendChild(row);
@@ -510,6 +569,13 @@ async function loginUser(){
       $('tl-day-label').textContent=fmtDay(todayStr());
       showScreen('screen-techlead');
       loadTlToday();loadTlHistory();
+    } else if(emp.role==='coordinator'){
+      $('co-name-display').textContent=emp.name;
+      $('co-id-display').textContent=emp.id+' — Post IT Coordinator';
+      $('co-date-label').textContent=fmtDate(todayStr());
+      $('co-day-label').textContent=fmtDay(todayStr());
+      showScreen('screen-coordinator');
+      loadCoToday();loadCoHistory();
     } else {
       $('emp-avatar').textContent=initials(emp.name);
       $('emp-name-display').textContent=emp.name;
@@ -719,7 +785,7 @@ function renderStats(elId,entries){
 /* Shared card render */
 function card(e,showEmp=true){
   const hasBlocker=e.blockers&&e.blockers.trim();
-  const tlBadge=e.role==='techlead'?'<span class="badge badge-tl" style="margin-left:6px">Tech Lead</span>':'';
+  const tlBadge=e.role==='techlead'?'<span class="badge badge-tl" style="margin-left:6px">Tech Lead</span>':e.role==='coordinator'?'<span class="badge badge-co" style="margin-left:6px">Coordinator</span>':'';
   const empInfo=showEmp?`<div class="entry-emp">${e.empId} &mdash; ${e.empName}${tlBadge}</div>`:'';
   return`<div class="entry-card">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px">
@@ -737,11 +803,84 @@ function card(e,showEmp=true){
   </div>`;
 }
 
+/* Coordinator */
+async function loadCoToday(){
+  showMsg('co-form-msg','');
+  try{
+    const f=await ghGet(ePath(currentUser.id,currentUser.name,todayStr()));
+    if(f){
+      const d=decode(f);
+      $('co-f-did').value=d.did||'';$('co-f-planned').value=d.planned||'';
+      $('co-f-blockers').value=d.blockers||'';$('co-f-hours').value=d.hours||8;$('co-f-notes').value=d.notes||'';
+      $('co-status-badge').innerHTML='&#10003; Saved';$('co-status-badge').className='badge badge-success';
+    }
+  }catch(e){showMsg('co-form-msg','Load failed: '+e.message,'error')}
+}
+async function saveCoEntry(){
+  const btn=$('co-save-btn');btn.disabled=true;btn.innerHTML='<span class="spin"></span>Saving...';
+  showMsg('co-form-msg','');
+  const path=ePath(currentUser.id,currentUser.name,todayStr());
+  const data={empId:currentUser.id,empName:currentUser.name,role:'coordinator',date:todayStr(),
+    did:$('co-f-did').value,planned:$('co-f-planned').value,blockers:$('co-f-blockers').value,
+    hours:parseFloat($('co-f-hours').value)||0,notes:$('co-f-notes').value,savedAt:new Date().toISOString()};
+  try{
+    const ex=await ghGet(path);
+    await ghPut(path,JSON.stringify(data,null,2),ex?ex.sha:null);
+    showMsg('co-form-msg','&#10003; Saved!','success');
+    $('co-status-badge').innerHTML='&#10003; Saved';$('co-status-badge').className='badge badge-success';
+    loadCoHistory();
+  }catch(e){showMsg('co-form-msg','Save failed: '+e.message,'error')}
+  btn.disabled=false;btn.innerHTML='&#8593; Save to GitHub';
+}
+async function loadCoHistory(){
+  const el=$('co-history-list');
+  el.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3)"><span class="spin"></span>Loading...</div>';
+  try{
+    const safe=currentUser.name.replace(/[^a-zA-Z0-9]/g,'_');
+    const dir=await ghGet(`entries/${currentUser.id}_${safe}`);
+    if(!dir||!Array.isArray(dir)){el.innerHTML='<div class="empty-state"><div class="empty-icon">&#128196;</div>No past entries.</div>';return}
+    const files=dir.filter(f=>f.name.endsWith('.json')).sort((a,b)=>b.name.localeCompare(a.name));
+    const entries=await Promise.all(files.slice(0,20).map(async f=>{const r=await ghGet(f.path);return r?decode(r):null}));
+    el.innerHTML=entries.filter(Boolean).map(e=>card(e,false)).join('');
+  }catch(e){el.innerHTML=`<div class="msg msg-error">Error: ${e.message}</div>`}
+}
+function coTab(tab){
+  $('co-tab-log-btn').classList.toggle('active',tab==='log');
+  $('co-tab-team-btn').classList.toggle('active',tab==='team');
+  $('co-tab-log').style.display=tab==='log'?'block':'none';
+  $('co-tab-team').style.display=tab==='team'?'block':'none';
+  if(tab==='team')loadCoTeam();
+}
+async function loadCoTeam(){
+  showMsg('co-msg','<span class="spin"></span>Loading team entries...','info');
+  $('co-list').innerHTML='';$('co-stats').innerHTML='';
+  try{
+    coEntries=await fetchAll();
+    renderStats('co-stats',coEntries);
+    $('co-from').value=todayStr();$('co-to').value=todayStr();
+    showMsg('co-msg','');coFilter();
+  }catch(e){showMsg('co-msg','Error: '+e.message,'error')}
+}
+function getCoFiltered(){
+  const from=$('co-from').value,to=$('co-to').value,emp=$('co-emp').value.trim().toLowerCase();
+  let f=coEntries;
+  if(from)f=f.filter(e=>e.date>=from);
+  if(to)f=f.filter(e=>e.date<=to);
+  if(emp)f=f.filter(e=>(e.empId||'').toLowerCase().includes(emp)||(e.empName||'').toLowerCase().includes(emp));
+  return f;
+}
+function coFilter(){
+  const f=getCoFiltered();
+  $('co-summary').textContent=f.length?`Showing ${f.length} entr${f.length===1?'y':'ies'} across ${new Set(f.map(e=>e.empId)).size} member(s)`:'';
+  $('co-list').innerHTML=f.length?f.map(e=>card(e,true)).join(''):'<div class="empty-state"><div class="empty-icon">&#128269;</div>No entries match.</div>';
+}
+function clearCoFilter(){$('co-from').value='';$('co-to').value='';$('co-emp').value='';coFilter()}
+
 /* Export Excel */
 function exportExcel(who){
-  const entries=who==='tl'?getTlFiltered():getAdminFiltered();
+  const entries=who==='tl'?getTlFiltered():who==='co'?getCoFiltered():getAdminFiltered();
   if(!entries.length){alert('No entries to export.');return}
-  const btnId=who==='tl'?'tl-export-btn':'ad-export-btn';
+  const btnId=who==='tl'?'tl-export-btn':who==='co'?'co-export-btn':'ad-export-btn';
   const btn=$(btnId);btn.disabled=true;btn.textContent='Exporting...';
   try{
     const rows=entries.map(e=>({'Date':e.date,'Day':fmtDay(e.date),'Role':e.role||'employee','Emp ID':e.empId||'','Name':e.empName||'','What I Did':e.did||'','Planned Tomorrow':e.planned||'','Blockers':e.blockers||'','Hours':e.hours||0,'Notes':e.notes||'','Saved At':e.savedAt?new Date(e.savedAt).toLocaleString('en-IN'):''}));
