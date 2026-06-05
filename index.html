@@ -434,6 +434,32 @@ textarea {
   color: var(--text3);
   margin-top: 5px;
 }
+
+.pin-box {
+  width: 56px !important;
+  height: 56px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  border: 1.5px solid var(--border2);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  padding: 0;
+}
+
+.pin-box:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,90,61,0.12);
+}
+
+.pin-box.filled {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
 </style>
 </head>
 <body>
@@ -448,6 +474,26 @@ textarea {
       </div>
     </div>
     <div id="header-actions"></div>
+  </div>
+
+  <!-- PIN SCREEN -->
+  <div id="screen-pin" class="screen">
+    <div style="max-width:340px;margin:0 auto">
+      <div class="card">
+        <div class="card-title">&#128274; Enter config PIN</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:16px">This area is protected. Enter the 4-digit PIN to access GitHub configuration.</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px" id="pin-boxes">
+          <input type="password" maxlength="1" class="pin-box" id="pin0" oninput="pinInput(0)" onkeydown="pinKey(event,0)" inputmode="numeric" pattern="[0-9]">
+          <input type="password" maxlength="1" class="pin-box" id="pin1" oninput="pinInput(1)" onkeydown="pinKey(event,1)" inputmode="numeric" pattern="[0-9]">
+          <input type="password" maxlength="1" class="pin-box" id="pin2" oninput="pinInput(2)" onkeydown="pinKey(event,2)" inputmode="numeric" pattern="[0-9]">
+          <input type="password" maxlength="1" class="pin-box" id="pin3" oninput="pinInput(3)" onkeydown="pinKey(event,3)" inputmode="numeric" pattern="[0-9]">
+        </div>
+        <div id="pin-msg"></div>
+        <button class="btn btn-primary btn-full" onclick="verifyPin()" style="margin-bottom:10px">Verify PIN &rarr;</button>
+        <button class="btn btn-secondary btn-full" onclick="showScreen('screen-login')">&larr; Back</button>
+      </div>
+      <div class="config-note">First time? Default PIN is <strong>1234</strong> &mdash; change it in config after login.</div>
+    </div>
   </div>
 
   <!-- CONFIG SCREEN -->
@@ -473,6 +519,11 @@ textarea {
       <div class="field">
         <label>Admin password</label>
         <input type="password" id="cfg-adminpw" placeholder="Set a password for admin login">
+      </div>
+      <div class="field">
+        <label>Config PIN (4 digits)</label>
+        <input type="password" id="cfg-pin" placeholder="e.g. 1234" maxlength="4" inputmode="numeric" pattern="[0-9]{4}">
+        <div class="help-text">This PIN protects access to this config screen</div>
       </div>
       <div id="cfg-msg"></div>
       <div style="margin-top:18px">
@@ -630,14 +681,10 @@ function showMsg(elId, text, type = 'info') {
 }
 
 function goConfig() {
-  showScreen('screen-config');
-  const c = getConfig();
-  if (c) {
-    document.getElementById('cfg-owner').value = c.owner || '';
-    document.getElementById('cfg-repo').value = c.repo || '';
-    document.getElementById('cfg-token').value = c.token || '';
-    document.getElementById('cfg-adminpw').value = c.adminpw || '';
-  }
+  clearPin();
+  showMsg('pin-msg', '', '');
+  showScreen('screen-pin');
+  setTimeout(() => document.getElementById('pin0').focus(), 100);
 }
 
 function saveConfig() {
@@ -645,8 +692,10 @@ function saveConfig() {
   const repo = document.getElementById('cfg-repo').value.trim();
   const token = document.getElementById('cfg-token').value.trim();
   const adminpw = document.getElementById('cfg-adminpw').value.trim();
+  const pin = document.getElementById('cfg-pin').value.trim();
   if (!owner || !repo || !token || !adminpw) { showMsg('cfg-msg', 'All fields are required.', 'error'); return; }
-  saveConfigData({ owner, repo, token, adminpw });
+  if (pin && !/^\d{4}$/.test(pin)) { showMsg('cfg-msg', 'PIN must be exactly 4 digits.', 'error'); return; }
+  saveConfigData({ owner, repo, token, adminpw, pin: pin || '1234' });
   showMsg('cfg-msg', '&#10003; Configuration saved!', 'success');
   setTimeout(() => showScreen('screen-login'), 800);
 }
@@ -900,6 +949,58 @@ function adminFilter() {
     return;
   }
   el.innerHTML = filtered.map(e => renderEntryCard(e, true)).join('');
+}
+
+function clearPin() {
+  for (let i = 0; i < 4; i++) {
+    const el = document.getElementById('pin' + i);
+    el.value = '';
+    el.classList.remove('filled');
+  }
+}
+
+function pinInput(idx) {
+  const el = document.getElementById('pin' + idx);
+  const val = el.value.replace(/\D/g, '');
+  el.value = val.slice(-1);
+  if (el.value) {
+    el.classList.add('filled');
+    if (idx < 3) document.getElementById('pin' + (idx + 1)).focus();
+    else verifyPin();
+  } else {
+    el.classList.remove('filled');
+  }
+}
+
+function pinKey(e, idx) {
+  if (e.key === 'Backspace' && !document.getElementById('pin' + idx).value && idx > 0) {
+    const prev = document.getElementById('pin' + (idx - 1));
+    prev.value = '';
+    prev.classList.remove('filled');
+    prev.focus();
+  }
+}
+
+function verifyPin() {
+  const entered = [0,1,2,3].map(i => document.getElementById('pin'+i).value).join('');
+  if (entered.length < 4) { showMsg('pin-msg', 'Please enter all 4 digits.', 'error'); return; }
+  const c = getConfig();
+  const correctPin = (c && c.pin) ? c.pin : '1234';
+  if (entered === correctPin) {
+    showMsg('pin-msg', '', '');
+    showScreen('screen-config');
+    if (c) {
+      document.getElementById('cfg-owner').value = c.owner || '';
+      document.getElementById('cfg-repo').value = c.repo || '';
+      document.getElementById('cfg-token').value = c.token || '';
+      document.getElementById('cfg-adminpw').value = c.adminpw || '';
+      document.getElementById('cfg-pin').value = c.pin || '1234';
+    }
+  } else {
+    showMsg('pin-msg', '&#10007; Incorrect PIN. Try again.', 'error');
+    clearPin();
+    setTimeout(() => document.getElementById('pin0').focus(), 100);
+  }
 }
 
 (function init() {
