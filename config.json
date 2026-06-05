@@ -1,5 +1,6 @@
 {
-  "rwToken": "your-readwrite-PAT-here",
-  "adminpw": "your-admin-password",
+  "rwSecret": "github_pat_",
+  "rwSecret2": "11A3CPWGQ0zpxvUFIbKaUl_2krHwBmCDQAearGWHj80wSkCD5AsS30He98AWr1qhY3MJBOREI4AwUn4cxg",
+  "adminpw": "1234",
   "pin": "1234"
 }
